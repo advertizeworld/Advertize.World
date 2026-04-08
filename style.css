@@ -1,0 +1,153 @@
+:root {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  
+  --pearl: #FDFCFB;
+  --dark-blue: #000C1D;
+  --accent-blue: #001F3F;
+  --logo-gold: #A37E2C;
+  --navy: #000C1D;
+  --midnight-navy: #000C1D;
+  --antique-gold: #A37E2C;
+  --amber-accent: #FFBF00;
+}
+
+body {
+  background-color: var(--pearl);
+  color: var(--midnight-navy);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+  background-image: radial-gradient(circle at 50% 50%, rgba(163, 126, 44, 0.02) 0%, transparent 100%);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, .serif {
+  font-family: var(--font-serif);
+  letter-spacing: -0.025em;
+}
+
+.btn-premium {
+  border: 1px solid var(--midnight-navy);
+  padding: 0.75rem 2rem;
+  transition: all 0.5s;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+}
+
+.btn-premium:hover {
+  background-color: var(--midnight-navy);
+  color: var(--pearl);
+}
+
+.btn-premium.bg-dark-blue {
+  background-color: var(--dark-blue);
+  color: var(--pearl);
+}
+
+.btn-premium.bg-dark-blue:hover {
+  background-color: var(--accent-blue);
+}
+
+.divider {
+  height: 1px;
+  background-color: rgba(0, 12, 29, 0.1);
+  width: 100%;
+}
+
+.luxury-glass {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.marble-texture {
+  background-image: linear-gradient(120deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%);
+}
+
+.silk-texture {
+  background: linear-gradient(45deg, #FDFCFB 0%, #F5F2ED 50%, #FDFCFB 100%);
+}
+
+.gold-metal-text {
+  color: var(--antique-gold);
+  display: inline-block;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.05));
+}
+
+/* Custom Utilities to match Tailwind classes used in the project */
+.text-pearl { color: var(--pearl); }
+.text-midnight-navy { color: var(--midnight-navy); }
+.text-antique-gold { color: var(--antique-gold); }
+.bg-midnight-navy { background-color: var(--midnight-navy); }
+.bg-pearl { background-color: var(--pearl); }
+
+/* Navigation states */
+nav.text-pearl { color: var(--pearl); }
+nav.text-midnight-navy { color: var(--midnight-navy); }
+
+nav.text-pearl .logo-svg text[fill="#000C1D"] { fill: #FDFCFB; }
+nav.text-pearl .logo-svg path[stroke="#000C1D"] { stroke: #FDFCFB; }
+
+/* Mobile menu */
+#mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background-color: var(--pearl);
+  display: flex;
+  flex-direction: column;
+  items-center: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+}
+
+#mobile-menu.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#mobile-menu a {
+  font-size: 1.875rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Particle Canvas */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Animations */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s, transform 1s;
+}
+
+[data-animate].visible {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertize.World | Precision in every execution.</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pearl: '#FDFCFB',
+                        'dark-blue': '#000C1D',
+                        'accent-blue': '#001F3F',
+                        'logo-gold': '#A37E2C',
+                        navy: '#000C1D',
+                        'midnight-navy': '#000C1D',
+                        'antique-gold': '#A37E2C',
+                        'amber-accent': '#FFBF00',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap">
+</head>
+<body class="bg-pearl text-midnight-navy font-sans antialiased scroll-smooth selection:bg-dark-blue selection:text-pearl overflow-x-hidden">
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav id="main-nav" class="fixed w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center transition-colors duration-500 text-midnight-navy">
+        <div class="flex items-center gap-2">
+            <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg w-12 h-12 transition-all duration-500">
+                <circle cx="200" cy="140" r="80" stroke="#E5E7EB" stroke-width="1" />
+                <ellipse cx="200" cy="140" rx="30" ry="80" stroke="#E5E7EB" stroke-width="1" />
+                <ellipse cx="200" cy="140" rx="60" ry="80" stroke="#E5E7EB" stroke-width="1" />
+                <line x1="120" y1="140" x2="280" y2="140" stroke="#E5E7EB" stroke-width="1" />
+                <path d="M135 100 Q200 110 265 100" stroke="#E5E7EB" stroke-width="1" fill="none" />
+                <path d="M135 180 Q200 170 265 180" stroke="#E5E7EB" stroke-width="1" fill="none" />
+                <path d="M150 100 Q130 180 280 220" stroke="#000C1D" stroke-width="12" stroke-linecap="round" fill="none" />
+                <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none" />
+                <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C" />
+                <path d="M260 100 L263 105 L268 106 L264 110 L265 115 L260 112 L255 115 L256 110 L252 106 L257 105 Z" fill="#000C1D" />
+                <path d="M280 115 L282 118 L285 119 L282 121 L283 124 L280 122 L277 124 L278 121 L275 119 L278 118 Z" fill="#000C1D" />
+                <text x="200" y="165" text-anchor="middle" fill="#000C1D" style="font: bold 56px sans-serif">Advertize</text>
+                <text x="200" y="205" text-anchor="middle" fill="#A37E2C" style="font: bold 24px sans-serif; letter-spacing: 8px">WORLD</text>
+            </svg>
+            <div class="text-xl tracking-tighter font-bold transition-colors duration-500">
+                <span>ADVERTIZE</span>
+                <span class="gold-metal-text">.WORLD</span>
+            </div>
+        </div>
+        
+        <div class="hidden md:flex items-center space-x-10 text-[10px] uppercase tracking-[0.2em]">
+            <a href="#about" class="hover:opacity-50 transition-opacity">About</a>
+            <a href="#services" class="hover:opacity-50 transition-opacity">Services</a>
+            <a href="#layers" class="hover:opacity-50 transition-opacity">Portfolio</a>
+            <a href="#contact" class="border border-dark-blue text-dark-blue px-6 py-2 transition-all duration-500 hover:bg-dark-blue hover:text-pearl">Contact</a>
+        </div>
+
+        <button id="menu-toggle" class="md:hidden transition-colors duration-500">
+            <svg id="menu-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <svg id="x-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#layers">Portfolio</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- Content Container -->
+    <main class="relative z-10">
+        
+        <!-- Hero Section -->
+        <header class="h-screen flex flex-col justify-center items-center text-center px-6">
+            <div data-animate>
+                <h1 class="text-3xl md:text-7xl mb-8 max-w-5xl font-serif leading-tight text-midnight-navy">
+                    Bringing Vision to Life. <br />
+                    <span class="italic gold-metal-text">Precision in every execution.</span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-neutral-500 mb-12 max-w-xl mx-auto font-light">
+                    Modern solutions crafted through AI and strategic thinking.
+                </p>
+                
+                <div class="flex flex-col md:flex-row gap-6 justify-center">
+                    <a href="#services" class="btn-premium inline-flex items-center gap-3">
+                        View Services
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                    <a href="#contact" class="btn-premium bg-dark-blue text-pearl hover:bg-accent-blue inline-flex items-center gap-3">
+                        Start a Conversation
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Trust Section -->
+        <section class="max-w-6xl mx-auto py-20 px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="flex flex-col items-center space-y-4" data-animate>
+                    <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-blue opacity-50"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <span class="text-[11px] uppercase tracking-[0.2em] text-neutral-500">40+ Clients Served</span>
+                </div>
+                <div class="flex flex-col items-center space-y-4" data-animate>
+                    <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-blue opacity-50"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <span class="text-[11px] uppercase tracking-[0.2em] text-neutral-500">100+ Projects Delivered</span>
+                </div>
+                <div class="flex flex-col items-center space-y-4" data-animate>
+                    <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-blue opacity-50"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+                    <span class="text-[11px] uppercase tracking-[0.2em] text-neutral-500">AI-Driven Workflow</span>
+                </div>
+                <div class="flex flex-col items-center space-y-4" data-animate>
+                    <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-blue opacity-50"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span class="text-[11px] uppercase tracking-[0.2em] text-neutral-500">Global Reach</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="max-w-5xl mx-auto py-40 px-6 text-center">
+            <p class="text-xl md:text-4xl text-midnight-navy leading-relaxed font-serif italic font-light" data-animate>
+                "Advertize.World operates where creativity meets technology. 
+                We create, design, and market ads that don’t just look good but drive engagement, 
+                conversions, and real business growth"
+            </p>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="max-w-6xl mx-auto py-32 px-6">
+            <h2 class="text-4xl md:text-6xl mb-24 font-serif text-center">Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div class="border-l border-accent-blue/20 pl-8 py-4" data-animate>
+                    <h3 class="text-2xl mb-4 font-serif">AI UGC Ads</h3>
+                    <p class="text-neutral-500 font-light leading-relaxed">AI-enhanced user-generated style ads crafted to deliver authentic engagement and scalable performance. Includes high-converting UGC-style video ads designed for both digital and large-scale broadcast environments, AI-generated spokesperson content, strategically developed hooks and scripts, studio-quality voiceovers, retention-focused captioning, and multiple creative variations engineered for testing and scale.</p>
+                </div>
+                <div class="border-l border-accent-blue/20 pl-8 py-4" data-animate>
+                    <h3 class="text-2xl mb-4 font-serif">Design</h3>
+                    <p class="text-neutral-500 font-light leading-relaxed">Refined, conversion-focused visuals built at the intersection of creative direction and AI precision. Includes high-performance website design (landing pages and funnels), premium social media creatives, scroll-stopping YouTube thumbnails, cohesive brand identity systems, and elevated e-commerce product visuals designed to strengthen brand presence and drive conversions across platforms.</p>
+                </div>
+                <div class="border-l border-accent-blue/20 pl-8 py-4" data-animate>
+                    <h3 class="text-2xl mb-4 font-serif">Copywriting</h3>
+                    <p class="text-neutral-500 font-light leading-relaxed">Strategic, conversion-driven messaging developed to capture attention and influence decision-making at scale. Includes high-impact advertising copy, persuasive website and landing page content, conversion-optimized product descriptions, structured email campaigns, sales scripts, and compelling hooks and headlines tailored for measurable performance.</p>
+                </div>
+                <div class="border-l border-accent-blue/20 pl-8 py-4" data-animate>
+                    <h3 class="text-2xl mb-4 font-serif">Marketing</h3>
+                    <p class="text-neutral-500 font-light leading-relaxed">Data-driven marketing systems designed to maximize reach, efficiency, and long-term growth. Includes full-scale campaign deployment across multi-channel ecosystems, advanced audience targeting, funnel architecture and optimization, continuous A/B testing, lead generation systems, intelligent retargeting strategies, and in-depth performance analytics to support scalable expansion.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Advertize.World Section -->
+        <section id="why-us" class="bg-midnight-navy text-pearl py-40 px-6 overflow-hidden relative">
+            <div class="absolute inset-0 marble-texture opacity-10 pointer-events-none"></div>
+            <div class="max-w-6xl mx-auto relative z-10">
+                <div class="text-center mb-32" data-animate>
+                    <span class="text-[10px] uppercase tracking-[0.6em] text-antique-gold block mb-8 font-semibold">
+                        The Competitive Advantage
+                    </span>
+                    <h2 class="text-4xl md:text-7xl mb-12 font-serif">Why Choose Us</h2>
+                    <p class="max-w-3xl mx-auto text-neutral-400 font-light leading-relaxed text-xl">
+                        Advertize.World partners with growth-focused companies to deliver high-performance creative at scale — combining AI efficiency with strategic oversight to drive measurable business outcomes.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-32">
+                    <div class="p-10 luxury-glass hover:bg-white/15 transition-all duration-500 group" data-animate>
+                        <div class="mb-8 transform group-hover:scale-110 transition-transform duration-500 text-antique-gold">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                        </div>
+                        <h3 class="text-xl mb-4 font-serif text-pearl group-hover:text-antique-gold transition-colors">Outcome-Driven Execution</h3>
+                        <p class="text-sm text-neutral-400 font-light leading-relaxed">Every asset we produce is aligned with clear performance objectives — whether that’s customer acquisition, conversion optimization, or revenue growth. We prioritize impact over aesthetics.</p>
+                    </div>
+                    <div class="p-10 luxury-glass hover:bg-white/15 transition-all duration-500 group" data-animate>
+                        <div class="mb-8 transform group-hover:scale-110 transition-transform duration-500 text-antique-gold">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                        </div>
+                        <h3 class="text-xl mb-4 font-serif text-pearl group-hover:text-antique-gold transition-colors">Strategic Use of AI</h3>
+                        <p class="text-sm text-neutral-400 font-light leading-relaxed">We leverage advanced AI systems as a force multiplier — not a replacement for strategy. Every output is guided, refined, and validated through human expertise to ensure commercial relevance.</p>
+                    </div>
+                    <div class="p-10 luxury-glass hover:bg-white/15 transition-all duration-500 group" data-animate>
+                        <div class="mb-8 transform group-hover:scale-110 transition-transform duration-500 text-antique-gold">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                        </div>
+                        <h3 class="text-xl mb-4 font-serif text-pearl group-hover:text-antique-gold transition-colors">Platform-Native Creative</h3>
+                        <p class="text-sm text-neutral-400 font-light leading-relaxed">We develop content specifically tailored to the dynamics of each platform — ensuring higher engagement, stronger retention, and improved conversion efficiency.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <button id="learn-process-btn" class="bg-antique-gold text-midnight-navy px-10 py-4 transition-all duration-500 uppercase tracking-[0.2em] text-[0.7rem] hover:bg-pearl group flex items-center gap-3 font-bold shadow-xl">
+                        Learn Our Process
+                        <svg id="process-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+
+                    <div id="process-content" class="overflow-hidden w-full transition-all duration-500" style="height: 0px; opacity: 0;">
+                        <div class="pt-24 grid grid-cols-1 md:grid-cols-4 gap-8">
+                            <div class="text-center md:text-left" data-animate>
+                                <div class="flex items-center gap-4 mb-4 justify-center md:justify-start">
+                                    <div class="w-10 h-10 rounded-full bg-accent-blue/20 flex items-center justify-center text-accent-blue">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                    </div>
+                                    <span class="text-accent-blue/40 font-mono text-sm">01</span>
+                                </div>
+                                <h4 class="text-lg font-semibold mb-2 uppercase tracking-wider">Understand</h4>
+                                <p class="text-sm text-neutral-500 font-light">Align with your goals and requirements.</p>
+                            </div>
+                            <div class="text-center md:text-left" data-animate>
+                                <div class="flex items-center gap-4 mb-4 justify-center md:justify-start">
+                                    <div class="w-10 h-10 rounded-full bg-accent-blue/20 flex items-center justify-center text-accent-blue">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.5 1.5"></path><path d="M7.5 3.5L13 18"></path></svg>
+                                    </div>
+                                    <span class="text-accent-blue/40 font-mono text-sm">02</span>
+                                </div>
+                                <h4 class="text-lg font-semibold mb-2 uppercase tracking-wider">Create</h4>
+                                <p class="text-sm text-neutral-500 font-light">Produce high-quality outputs using AI and human guidance.</p>
+                            </div>
+                            <div class="text-center md:text-left" data-animate>
+                                <div class="flex items-center gap-4 mb-4 justify-center md:justify-start">
+                                    <div class="w-10 h-10 rounded-full bg-accent-blue/20 flex items-center justify-center text-accent-blue">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                    </div>
+                                    <span class="text-accent-blue/40 font-mono text-sm">03</span>
+                                </div>
+                                <h4 class="text-lg font-semibold mb-2 uppercase tracking-wider">Refine</h4>
+                                <p class="text-sm text-neutral-500 font-light">Iterate and improve based on feedback.</p>
+                            </div>
+                            <div class="text-center md:text-left" data-animate>
+                                <div class="flex items-center gap-4 mb-4 justify-center md:justify-start">
+                                    <div class="w-10 h-10 rounded-full bg-accent-blue/20 flex items-center justify-center text-accent-blue">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-5c1.62-2.2 5-3 5-3"></path><path d="M12 15v5s3.03-.55 5-2c2.2-1.62 3-5 3-5"></path></svg>
+                                    </div>
+                                    <span class="text-accent-blue/40 font-mono text-sm">04</span>
+                                </div>
+                                <h4 class="text-lg font-semibold mb-2 uppercase tracking-wider">Deliver & Scale</h4>
+                                <p class="text-sm text-neutral-500 font-light">Finalize assets and scale production as needed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="max-w-2xl mx-auto py-32 px-6">
+            <h2 class="text-4xl md:text-6xl mb-20 font-serif text-center">Contact</h2>
+            
+            <div id="form-success" class="text-center p-12 luxury-glass border-antique-gold/20" style="display: none;">
+                <p class="text-xl font-serif italic text-midnight-navy">Thank you! Your message has been sent successfully.</p>
+                <button onclick="resetForm()" class="mt-8 btn-premium">Send Another Message</button>
+            </div>
+
+            <form id="contact-form" class="space-y-10">
+                <div class="border-b border-midnight-navy/20 focus-within:border-midnight-navy transition-colors pb-4">
+                    <input type="text" name="name" placeholder="NAME" required class="w-full bg-transparent outline-none text-[12px] tracking-widest uppercase">
+                </div>
+                <div class="border-b border-midnight-navy/20 focus-within:border-midnight-navy transition-colors pb-4">
+                    <input type="email" name="email" placeholder="EMAIL" required class="w-full bg-transparent outline-none text-[12px] tracking-widest uppercase">
+                </div>
+                <div class="border-b border-midnight-navy/20 focus-within:border-midnight-navy transition-colors pb-12">
+                    <textarea name="message" rows="4" placeholder="MESSAGE" required class="w-full bg-transparent outline-none text-[12px] tracking-widest uppercase resize-none"></textarea>
+                </div>
+                <p id="form-error" class="text-red-500 text-xs uppercase tracking-widest" style="display: none;"></p>
+                <button type="submit" id="submit-btn" class="btn-premium w-full disabled:opacity-50">Start a Conversation</button>
+            </form>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-midnight-navy text-pearl py-24 px-6 border-t border-white/5 relative overflow-hidden">
+            <div class="absolute inset-0 marble-texture opacity-5 pointer-events-none"></div>
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-8 relative z-10">
+                <!-- Brand Column -->
+                <div class="col-span-1 md:col-span-1">
+                    <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mb-8">
+                        <circle cx="200" cy="140" r="80" stroke="#E5E7EB" stroke-width="1" />
+                        <ellipse cx="200" cy="140" rx="30" ry="80" stroke="#E5E7EB" stroke-width="1" />
+                        <ellipse cx="200" cy="140" rx="60" ry="80" stroke="#E5E7EB" stroke-width="1" />
+                        <line x1="120" y1="140" x2="280" y2="140" stroke="#E5E7EB" stroke-width="1" />
+                        <path d="M135 100 Q200 110 265 100" stroke="#E5E7EB" stroke-width="1" fill="none" />
+                        <path d="M135 180 Q200 170 265 180" stroke="#E5E7EB" stroke-width="1" fill="none" />
+                        <path d="M150 100 Q130 180 280 220" stroke="#FDFCFB" stroke-width="12" stroke-linecap="round" fill="none" />
+                        <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none" />
+                        <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C" />
+                        <path d="M260 100 L263 105 L268 106 L264 110 L265 115 L260 112 L255 115 L256 110 L252 106 L257 105 Z" fill="#FDFCFB" />
+                        <path d="M280 115 L282 118 L285 119 L282 121 L283 124 L280 122 L277 124 L278 121 L275 119 L278 118 Z" fill="#FDFCFB" />
+                        <text x="200" y="165" text-anchor="middle" fill="#FDFCFB" style="font: bold 56px sans-serif">Advertize</text>
+                        <text x="200" y="205" text-anchor="middle" fill="#A37E2C" style="font: bold 24px sans-serif; letter-spacing: 8px">WORLD</text>
+                    </svg>
+                    <p class="text-neutral-400 text-sm leading-relaxed font-light max-w-[240px]">
+                        The world's first performance-engineered advertising agency. Combining institutional rigor with frontier technology.
+                    </p>
+                </div>
+
+                <!-- Navigation Column -->
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] text-antique-gold mb-8 font-semibold">Navigation</h4>
+                    <ul class="space-y-4 text-sm text-neutral-400 font-light">
+                        <li><a href="#services" class="hover:text-antique-gold transition-colors">Services</a></li>
+                        <li><a href="#why-us" class="hover:text-antique-gold transition-colors">Expertise</a></li>
+                        <li><a href="#contact" class="hover:text-antique-gold transition-colors">Portfolio</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal Column -->
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] text-antique-gold mb-8 font-semibold">Legal</h4>
+                    <ul class="space-y-4 text-sm text-neutral-400 font-light">
+                        <li><a href="#" class="hover:text-antique-gold transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-antique-gold transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-antique-gold transition-colors">Cookie Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Column -->
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.4em] text-antique-gold mb-8 font-semibold">Contact</h4>
+                    <ul class="space-y-4 text-sm text-neutral-400 font-light">
+                        <li class="flex items-center gap-3 group">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-antique-gold"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                            <a href="https://www.instagram.com/advertize.world?igsh=cHR4a3F4YXFvYTJ6" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Instagram</a>
+                        </li>
+                        <li class="flex items-center gap-3 group">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-antique-gold"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <a href="mailto:advertize.w@gmail.com" class="hover:text-white transition-colors">advertize.w@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="max-w-6xl mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-[10px] tracking-widest uppercase text-neutral-500">
+                <p>© 2026 Advertize.World. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <!-- Floating WhatsApp CTA -->
+        <a href="https://wa.me/447454768842" target="_blank" rel="noopener noreferrer" class="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl flex items-center justify-center group" aria-label="Chat on WhatsApp">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            <span class="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-3 transition-all duration-500 ease-in-out whitespace-nowrap text-sm font-semibold">
+                Chat with us
+            </span>
+        </a>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
