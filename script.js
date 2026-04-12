@@ -468,3 +468,95 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     }
   );
 })();
+
+// ── 7. CONTACT SECTION PARTICLE BURST ────────────────────────────────────────
+(function initContactBurst() {
+  if (typeof THREE === 'undefined' || typeof gsap === 'undefined') return;
+  const canvas = document.getElementById('contact-canvas');
+  if (!canvas) return;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+  camera.position.z = 300;
+
+  const setSize = () => {
+    const W = canvas.offsetWidth  || 400;
+    const H = canvas.offsetHeight || 400;
+    renderer.setSize(W, H);
+    camera.aspect = W / H;
+    camera.updateProjectionMatrix();
+  };
+  setSize();
+  window.addEventListener('resize', setSize);
+
+  const COUNT     = 80;
+  const positions = new Float32Array(COUNT * 3); // all zeros — burst from center
+  const velocities = Array.from({ length: COUNT }, () => ({
+    x: (Math.random() - 0.5) * 8,
+    y: (Math.random() - 0.5) * 8,
+    z: (Math.random() - 0.5) * 2
+  }));
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const points = new THREE.Points(geo, new THREE.PointsMaterial({
+    color: 0xA37E2C, size: 2.5, transparent: true, opacity: 0.5
+  }));
+  scene.add(points);
+
+  let burst    = false;
+  let burstRaf;
+
+  const burstTick = () => {
+    burstRaf = requestAnimationFrame(burstTick);
+    if (burst) {
+      const pos = geo.attributes.position.array;
+      for (let i = 0; i < COUNT; i++) {
+        velocities[i].x *= 0.97;
+        velocities[i].y *= 0.97;
+        velocities[i].z *= 0.97;
+        pos[i * 3]     += velocities[i].x;
+        pos[i * 3 + 1] += velocities[i].y;
+        pos[i * 3 + 2] += velocities[i].z;
+      }
+      geo.attributes.position.needsUpdate = true;
+    }
+    renderer.render(scene, camera);
+  };
+
+  // Only run when in viewport
+  new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      cancelAnimationFrame(burstRaf);
+      if (entry.isIntersecting) burstTick();
+    });
+  }).observe(canvas);
+
+  // Fire burst once when contact section enters view
+  ScrollTrigger.create({
+    trigger: '#contact',
+    start: 'top 65%',
+    once: true,
+    onEnter: () => {
+      burst = true;
+      // Animate contact form in simultaneously
+      gsap.from('#contact-form', {
+        scale: 0.96, opacity: 0, y: 30,
+        duration: 0.9, ease: 'power2.out'
+      });
+    }
+  });
+})();
+
+// ── 8. NAV FROSTED GLASS ON SCROLL ───────────────────────────────────────────
+(function initNavBlur() {
+  if (typeof ScrollTrigger === 'undefined') return;
+  ScrollTrigger.create({
+    start: 'top -80',
+    end: 99999,
+    toggleClass: { targets: '#main-nav', className: 'nav-scrolled' }
+  });
+})();
