@@ -228,3 +228,69 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.innerText = 'Start a Conversation';
   };
 });
+
+// ── 2. HERO TEXT ENTRANCE ─────────────────────────────────────
+(function initHeroText() {
+  if (typeof gsap === 'undefined') return;
+  const h1      = document.querySelector('header h1');
+  const subtitle = document.querySelector('header p');
+  const ctaBtns  = document.querySelectorAll('header a.btn-premium, header button.btn-premium');
+  if (!h1) return;
+
+  gsap.timeline({ delay: 0.3 })
+    .from(h1, {
+      y: 60, opacity: 0, rotationX: 20,
+      transformPerspective: 900,
+      duration: 1.1,
+      ease: 'power3.out'
+    })
+    .from(subtitle, {
+      y: 40, opacity: 0,
+      duration: 0.9,
+      ease: 'power2.out'
+    }, '-=0.6')
+    .from(ctaBtns, {
+      y: 30, opacity: 0,
+      stagger: 0.12,
+      duration: 0.7,
+      ease: 'power2.out'
+    }, '-=0.5');
+})();
+
+// ── 3. SECTION HEADING FOLD-UP REVEALS ───────────────────────
+(function initHeadingReveals() {
+  if (typeof gsap === 'undefined') return;
+  document.querySelectorAll('section h2').forEach(h2 => {
+    gsap.from(h2, {
+      rotationX: 85,
+      opacity: 0,
+      transformOrigin: 'top center',
+      transformPerspective: 800,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: h2,
+        start: 'top 88%',
+        once: true
+      }
+    });
+  });
+})();
+
+// ── 4. DATA-ANIMATE SCROLL REVEALS (replaces IntersectionObserver) ──
+(function initScrollReveals() {
+  if (typeof gsap === 'undefined') return;
+  gsap.utils.toArray('[data-animate]').forEach(el => {
+    gsap.from(el, {
+      y: 40,
+      opacity: 0,
+      duration: 0.85,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        once: true
+      }
+    });
+  });
+})();
