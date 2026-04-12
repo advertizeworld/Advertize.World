@@ -379,3 +379,29 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     });
   });
 })();
+
+// ── 5. SERVICE CARD 3D TILT ON HOVER ─────────────────────────────────────────
+(function initCardTilt() {
+  if (typeof gsap === 'undefined') return;
+  const cards = document.querySelectorAll('#services .grid > div');
+  cards.forEach(card => {
+    card.style.transformStyle = 'preserve-3d';
+    card.style.willChange     = 'transform';
+
+    const rotX = gsap.quickTo(card, 'rotationX', { duration: 0.4, ease: 'power2.out' });
+    const rotY = gsap.quickTo(card, 'rotationY', { duration: 0.4, ease: 'power2.out' });
+
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 2;
+      const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 2;
+      rotY(x * 12);
+      rotX(-y * 10);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      rotX(0);
+      rotY(0);
+    });
+  });
+})();
