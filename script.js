@@ -281,6 +281,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 
   // Mouse parallax target values
   let mx = 0, my = 0;
+  let autoRotY = 0, parallaxY = 0;
   window.addEventListener('mousemove', e => {
     mx = (e.clientX / window.innerWidth  - 0.5) * 0.12;
     my = (e.clientY / window.innerHeight - 0.5) * 0.12;
@@ -292,11 +293,11 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   const globeTick = () => {
     if (!globeActive.value) return;
     globeRaf = requestAnimationFrame(globeTick);
-    wireframe.rotation.y += 0.0008;
-    ring.rotation.y      += 0.0008;
-    // Smooth mouse parallax
+    autoRotY  += 0.0008;
+    parallaxY += (mx - parallaxY) * 0.05;
     wireframe.rotation.x += (my - wireframe.rotation.x) * 0.05;
-    wireframe.rotation.y += (mx - wireframe.rotation.y) * 0.05;
+    wireframe.rotation.y  = autoRotY + parallaxY;
+    ring.rotation.y       = autoRotY;
     ring.rotation.x       = wireframe.rotation.x * 0.5;
     renderer.render(scene, camera);
   };
@@ -306,7 +307,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   window.addEventListener('resize', () => {
     const W2 = canvas.offsetWidth  || window.innerWidth;
     const H2 = canvas.offsetHeight || window.innerHeight;
-    renderer.setSize(W2, H2);
+    renderer.setSize(W2, H2, false);
     camera.aspect = W2 / H2;
     camera.updateProjectionMatrix();
   });
@@ -337,6 +338,6 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     start: 'top bottom',
     end: 'bottom top',
     onLeave:      () => { globeActive.value = false; cancelAnimationFrame(globeRaf); canvas.style.visibility = 'hidden'; },
-    onEnterBack:  () => { globeActive.value = true;  canvas.style.visibility = 'visible'; globeTick(); }
+    onEnterBack:  () => { globeActive.value = true; cancelAnimationFrame(globeRaf); canvas.style.visibility = 'visible'; globeTick(); }
   });
 })();
