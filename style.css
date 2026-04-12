@@ -147,15 +147,14 @@ nav.text-pearl .logo-svg path[stroke="#000C1D"] { stroke: #FDFCFB; }
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
 }
 
 /* ── Diamond canvas — right side of Why-Us section ── */
 #diamond-canvas {
   position: absolute;
-  top: 50%;
+  top: calc(50% - 140px);
   right: 4%;
-  transform: translateY(-50%);
   width: 280px;
   height: 280px;
   pointer-events: none;
