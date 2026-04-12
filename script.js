@@ -213,3 +213,130 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.innerText = 'Start a Conversation';
   };
 });
+
+// ============================================================
+// 3D ANIMATIONS — Three.js + GSAP ScrollTrigger
+// Runs immediately (script is at bottom of body, DOM is ready)
+// ============================================================
+
+// Register ScrollTrigger once — must run before any ScrollTrigger usage
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+// ── 1. HERO GLOBE ────────────────────────────────────────────
+(function initGlobe() {
+  if (typeof THREE === 'undefined' || typeof gsap === 'undefined') return;
+  const canvas = document.getElementById('globe-canvas');
+  if (!canvas) return;
+
+  const W = canvas.offsetWidth  || window.innerWidth;
+  const H = canvas.offsetHeight || window.innerHeight;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(W, H);
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 2000);
+  camera.position.z = 600;
+
+  // Navy wireframe sphere
+  const wireframe = new THREE.LineSegments(
+    new THREE.WireframeGeometry(new THREE.SphereGeometry(180, 24, 16)),
+    new THREE.LineBasicMaterial({ color: 0x000C1D, transparent: true, opacity: 0.12 })
+  );
+  scene.add(wireframe);
+
+  // 3 gold meridian rings
+  const goldMat = new THREE.LineBasicMaterial({ color: 0xA37E2C, transparent: true, opacity: 0.18 });
+  [0, 60, 120].forEach(deg => {
+    const pts = [];
+    for (let i = 0; i <= 64; i++) {
+      const a = (i / 64) * Math.PI * 2;
+      pts.push(new THREE.Vector3(Math.cos(a) * 180, Math.sin(a) * 180, 0));
+    }
+    const meridian = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(pts), goldMat
+    );
+    meridian.rotation.y = THREE.MathUtils.degToRad(deg);
+    scene.add(meridian);
+  });
+
+  // Equatorial gold particle ring
+  const RING_COUNT = 120;
+  const ringPos    = new Float32Array(RING_COUNT * 3);
+  for (let i = 0; i < RING_COUNT; i++) {
+    const a = (i / RING_COUNT) * Math.PI * 2;
+    ringPos[i * 3]     = Math.cos(a) * 195;
+    ringPos[i * 3 + 1] = (Math.random() - 0.5) * 12;
+    ringPos[i * 3 + 2] = Math.sin(a) * 195;
+  }
+  const ringGeo = new THREE.BufferGeometry();
+  ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPos, 3));
+  const ring = new THREE.Points(ringGeo, new THREE.PointsMaterial({
+    color: 0xA37E2C, size: 1.8, transparent: true, opacity: 0.35
+  }));
+  scene.add(ring);
+
+  // Mouse parallax target values
+  let mx = 0, my = 0;
+  window.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth  - 0.5) * 0.12;
+    my = (e.clientY / window.innerHeight - 0.5) * 0.12;
+  });
+
+  // Render loop
+  let globeRaf;
+  const globeActive = { value: true };
+  const globeTick = () => {
+    if (!globeActive.value) return;
+    globeRaf = requestAnimationFrame(globeTick);
+    wireframe.rotation.y += 0.0008;
+    ring.rotation.y      += 0.0008;
+    // Smooth mouse parallax
+    wireframe.rotation.x += (my - wireframe.rotation.x) * 0.05;
+    wireframe.rotation.y += (mx - wireframe.rotation.y) * 0.05;
+    ring.rotation.x       = wireframe.rotation.x * 0.5;
+    renderer.render(scene, camera);
+  };
+  globeTick();
+
+  // Resize
+  window.addEventListener('resize', () => {
+    const W2 = canvas.offsetWidth  || window.innerWidth;
+    const H2 = canvas.offsetHeight || window.innerHeight;
+    renderer.setSize(W2, H2);
+    camera.aspect = W2 / H2;
+    camera.updateProjectionMatrix();
+  });
+
+  // Entrance animation (load)
+  gsap.from(canvas, {
+    duration: 1.4,
+    opacity: 0,
+    scale: 0.85,
+    ease: 'power2.out',
+    transformOrigin: 'center center'
+  });
+
+  // Scroll exit — fade out as hero scrolls away
+  gsap.to(canvas, {
+    opacity: 0,
+    scrollTrigger: {
+      trigger: 'header',
+      start: 'center top',
+      end: 'bottom top',
+      scrub: 1
+    }
+  });
+
+  // Stop RAF when off-screen, resume when back
+  ScrollTrigger.create({
+    trigger: 'header',
+    start: 'top bottom',
+    end: 'bottom top',
+    onLeave:      () => { globeActive.value = false; cancelAnimationFrame(globeRaf); canvas.style.visibility = 'hidden'; },
+    onEnterBack:  () => { globeActive.value = true;  canvas.style.visibility = 'visible'; globeTick(); }
+  });
+})();
