@@ -405,3 +405,66 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     });
   });
 })();
+
+// ── 6. FLOATING DIAMOND (WHY-US SECTION) ─────────────────────────────────────
+(function initDiamond() {
+  if (typeof THREE === 'undefined' || typeof gsap === 'undefined') return;
+  const canvas = document.getElementById('diamond-canvas');
+  if (!canvas) return;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(280, 280);
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 500);
+  camera.position.z = 200;
+
+  // Outer gold wireframe octahedron
+  const outerWire = new THREE.LineSegments(
+    new THREE.WireframeGeometry(new THREE.OctahedronGeometry(70, 0)),
+    new THREE.LineBasicMaterial({ color: 0xA37E2C, transparent: true, opacity: 0.55 })
+  );
+  scene.add(outerWire);
+
+  // Inner amber wireframe octahedron (counter-rotates)
+  const innerWire = new THREE.LineSegments(
+    new THREE.WireframeGeometry(new THREE.OctahedronGeometry(42, 0)),
+    new THREE.LineBasicMaterial({ color: 0xFFBF00, transparent: true, opacity: 0.2 })
+  );
+  scene.add(innerWire);
+
+  let diamondTime = 0;
+  let diamondRaf;
+
+  const diamondTick = () => {
+    diamondRaf = requestAnimationFrame(diamondTick);
+    diamondTime += 0.016;
+    outerWire.rotation.y += 0.006;
+    outerWire.rotation.x += 0.002;
+    innerWire.rotation.y -= 0.004;
+    innerWire.rotation.x  = outerWire.rotation.x * 0.8;
+    // Gentle vertical bob
+    outerWire.position.y = Math.sin(diamondTime * 0.8) * 8;
+    innerWire.position.y = outerWire.position.y;
+    renderer.render(scene, camera);
+  };
+
+  // Pause render loop when scrolled out of view
+  new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) diamondTick();
+      else cancelAnimationFrame(diamondRaf);
+    });
+  }).observe(canvas);
+
+  // Scroll entrance: scale + fade in
+  gsap.fromTo(canvas,
+    { opacity: 0, scale: 0.6 },
+    {
+      opacity: 1, scale: 1,
+      duration: 1.2, ease: 'back.out(1.4)',
+      scrollTrigger: { trigger: '#why-us', start: 'top 70%', once: true }
+    }
+  );
+})();
