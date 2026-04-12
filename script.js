@@ -453,8 +453,8 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   // Pause render loop when scrolled out of view
   new IntersectionObserver(entries => {
     entries.forEach(entry => {
+      cancelAnimationFrame(diamondRaf);
       if (entry.isIntersecting) diamondTick();
-      else cancelAnimationFrame(diamondRaf);
     });
   }).observe(canvas);
 
