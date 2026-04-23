@@ -179,18 +179,25 @@ document.addEventListener('DOMContentLoaded', () => {
       formError.style.display = 'none';
 
       try {
-        const response = await fetch('/api/contact', {
+        const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
+          body: JSON.stringify({
+            access_key: 'ce748907-0f1f-4eaf-b459-5dfc864b3f85', // replace with key from web3forms.com
+            subject: `New message from ${formData.name} — Advertize.World`,
+            from_name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            botcheck: ''
+          })
         });
 
-        if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
           contactForm.style.display = 'none';
           formSuccess.style.display = 'block';
         } else {
-          const data = await response.json();
-          formError.innerText = data.error || 'Failed to send message.';
+          formError.innerText = data.message || 'Failed to send message. Please try again.';
           formError.style.display = 'block';
           submitBtn.disabled = false;
           submitBtn.innerText = 'Start a Conversation';
@@ -322,23 +329,27 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   });
 
   // Scroll exit — fade out as hero scrolls away
-  gsap.to(canvas, {
-    opacity: 0,
-    scrollTrigger: {
-      trigger: 'header',
-      start: 'center top',
-      end: 'bottom top',
-      scrub: 1
+  gsap.fromTo(canvas,
+    { opacity: 1 },
+    {
+      opacity: 0,
+      immediateRender: false,
+      scrollTrigger: {
+        trigger: 'header',
+        start: 'center top',
+        end: 'bottom top',
+        scrub: 1
+      }
     }
-  });
+  );
 
-  // Stop RAF when off-screen, resume when back
+  // Stop RAF when off-screen, resume when back (opacity handled by scrub above)
   ScrollTrigger.create({
     trigger: 'header',
     start: 'top bottom',
     end: 'bottom top',
-    onLeave:      () => { globeActive.value = false; cancelAnimationFrame(globeRaf); canvas.style.visibility = 'hidden'; },
-    onEnterBack:  () => { globeActive.value = true; cancelAnimationFrame(globeRaf); canvas.style.visibility = 'visible'; globeTick(); }
+    onLeave:     () => { globeActive.value = false; cancelAnimationFrame(globeRaf); },
+    onEnterBack: () => { globeActive.value = true;  cancelAnimationFrame(globeRaf); globeTick(); }
   });
 })();
 

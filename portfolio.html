@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Advertize.World</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pearl: '#FDFCFB',
+            'dark-blue': '#000C1D',
+            'accent-blue': '#001F3F',
+            'logo-gold': '#A37E2C',
+            navy: '#000C1D',
+            'midnight-navy': '#000C1D',
+            'antique-gold': '#A37E2C',
+            'amber-accent': '#FFBF00',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap">
+  <style>
+    /* ── Hero animations ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+    .fade-up:nth-child(5) { transition-delay: 0.4s; }
+
+    /* ── CTA button ── */
+    .cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, #000C1D 0%, #001F3F 100%);
+      color: #FDFCFB;
+      padding: 1rem 2.4rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: all 0.35s ease;
+      box-shadow: 0 4px 24px rgba(0,12,29,0.18), 0 1px 4px rgba(163,126,44,0.12);
+    }
+    .cta-primary:hover {
+      background: linear-gradient(135deg, #001F3F 0%, #000C1D 100%);
+      box-shadow: 0 8px 32px rgba(0,12,29,0.28), 0 2px 8px rgba(163,126,44,0.22);
+      transform: translateY(-2px);
+      border-color: rgba(163,126,44,0.35);
+    }
+    .cta-primary svg {
+      transition: transform 0.3s ease;
+    }
+    .cta-primary:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* ── Trust bar ── */
+    .trust-stars {
+      color: #A37E2C;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Masonry grid ── */
+    .masonry {
+      columns: 4;
+      column-gap: 14px;
+    }
+    @media (max-width: 1024px) { .masonry { columns: 3; } }
+    @media (max-width: 640px)  { .masonry { columns: 2; column-gap: 8px; } }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 14px;
+      overflow: hidden;
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+    @media (max-width: 640px) { .masonry-item { margin-bottom: 8px; } }
+
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      filter: brightness(0.97) saturate(0.95);
+    }
+    .masonry-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(1) saturate(1.05);
+    }
+    .masonry-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,12,29,0.22) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .masonry-item:hover::after {
+      opacity: 1;
+    }
+
+    /* ── Grid brand overlay ── */
+    .grid-brand-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    /* ── Section divider ── */
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: #A37E2C;
+      font-weight: 500;
+    }
+
+    /* ── Scroll frosted glass ── */
+    #main-nav.nav-scrolled {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: rgba(253,252,251,0.92) !important;
+    }
+
+    /* ── Stat cards ── */
+    .stat-card {
+      border: 1px solid rgba(0,12,29,0.08);
+      border-radius: 12px;
+      padding: 2rem 2.5rem;
+      background: white;
+      box-shadow: 0 2px 16px rgba(0,12,29,0.05);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .stat-card:hover {
+      box-shadow: 0 8px 32px rgba(0,12,29,0.1);
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body class="bg-pearl text-midnight-navy font-sans antialiased scroll-smooth overflow-x-hidden">
+
+  <!-- Particle Canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- ── NAV (exact copy from index.html) ── -->
+  <nav id="main-nav" class="fixed w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center transition-colors duration-500 text-midnight-navy">
+    <div class="flex items-center gap-2">
+      <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg w-12 h-12 transition-all duration-500">
+        <circle cx="200" cy="140" r="80" stroke="#E5E7EB" stroke-width="1" />
+        <ellipse cx="200" cy="140" rx="30" ry="80" stroke="#E5E7EB" stroke-width="1" />
+        <ellipse cx="200" cy="140" rx="60" ry="80" stroke="#E5E7EB" stroke-width="1" />
+        <line x1="120" y1="140" x2="280" y2="140" stroke="#E5E7EB" stroke-width="1" />
+        <path d="M135 100 Q200 110 265 100" stroke="#E5E7EB" stroke-width="1" fill="none" />
+        <path d="M135 180 Q200 170 265 180" stroke="#E5E7EB" stroke-width="1" fill="none" />
+        <path d="M150 100 Q130 180 280 220" stroke="#000C1D" stroke-width="12" stroke-linecap="round" fill="none" />
+        <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none" />
+        <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C" />
+        <path d="M260 100 L263 105 L268 106 L264 110 L265 115 L260 112 L255 115 L256 110 L252 106 L257 105 Z" fill="#000C1D" />
+        <path d="M280 115 L282 118 L285 119 L282 121 L283 124 L280 122 L277 124 L278 121 L275 119 L278 118 Z" fill="#000C1D" />
+        <text x="200" y="165" text-anchor="middle" fill="#000C1D" style="font: bold 56px sans-serif">Advertize</text>
+        <text x="200" y="205" text-anchor="middle" fill="#A37E2C" style="font: bold 24px sans-serif; letter-spacing: 8px">WORLD</text>
+      </svg>
+      <div class="text-xl tracking-tighter font-bold transition-colors duration-500">
+        <span>ADVERTIZE</span>
+        <span class="gold-metal-text">.WORLD</span>
+      </div>
+    </div>
+
+    <div class="hidden md:flex items-center space-x-10 text-[10px] uppercase tracking-[0.2em]">
+      <a href="index.html#about" class="hover:opacity-50 transition-opacity">About</a>
+      <a href="index.html#services" class="hover:opacity-50 transition-opacity">Services</a>
+      <a href="portfolio.html" class="hover:opacity-50 transition-opacity" style="color:#A37E2C;">Portfolio</a>
+      <a href="index.html#contact" class="border border-dark-blue text-dark-blue px-6 py-2 transition-all duration-500 hover:bg-dark-blue hover:text-pearl">Contact</a>
+    </div>
+
+    <button id="menu-toggle" class="md:hidden transition-colors duration-500">
+      <svg id="menu-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <svg id="x-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu">
+    <a href="index.html#about">About</a>
+    <a href="index.html#services">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+
+  <!-- ── HERO SECTION ── -->
+  <section class="relative pt-44 pb-20 px-6 text-center overflow-hidden">
+    <!-- subtle radial bg -->
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(163,126,44,0.05) 0%, transparent 70%);"></div>
+
+    <div class="relative max-w-4xl mx-auto">
+      <p class="section-label fade-up mb-7">Our Work</p>
+
+      <h1 class="fade-up font-serif font-normal leading-[1.1] mb-8" style="font-size: clamp(2.6rem, 6vw, 5rem);">
+        AI-Powered creative that<br class="hidden md:block">
+        reduces CPA by <span style="color:#A37E2C;">35%</span><br class="hidden md:block">
+        and <em>scales your meta spend</em>
+      </h1>
+
+      <p class="fade-up text-neutral-500 font-light leading-relaxed mb-12 mx-auto" style="max-width:520px; font-size:0.95rem;">
+        We craft performance-engineered AI ads that don't just look good — they convert. Every creative is built around data, tested for impact, and designed to scale.
+      </p>
+
+      <div class="fade-up mb-8">
+        <a href="index.html#contact" class="cta-primary">
+          Book your Discovery Call
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- Trust indicator -->
+      <div class="fade-up flex items-center justify-center gap-3">
+        <span class="trust-stars">★★★★★</span>
+        <span class="text-neutral-500 text-xs tracking-widest uppercase font-light">Trusted by 100+ brands</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS BAR ── -->
+  <section class="py-12 px-6 border-y border-midnight-navy/8">
+    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="stat-card text-center fade-up">
+        <p class="font-serif text-3xl md:text-4xl font-normal mb-1" style="color:#A37E2C;">35%</p>
+        <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-light">Avg CPA Reduction</p>
+      </div>
+      <div class="stat-card text-center fade-up">
+        <p class="font-serif text-3xl md:text-4xl font-normal mb-1" style="color:#A37E2C;">100+</p>
+        <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-light">Brands Served</p>
+      </div>
+      <div class="stat-card text-center fade-up">
+        <p class="font-serif text-3xl md:text-4xl font-normal mb-1" style="color:#A37E2C;">4.2×</p>
+        <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-light">Avg ROAS Lift</p>
+      </div>
+      <div class="stat-card text-center fade-up">
+        <p class="font-serif text-3xl md:text-4xl font-normal mb-1" style="color:#A37E2C;">48h</p>
+        <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-light">Avg Delivery Time</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IMAGE GRID ── -->
+  <section class="py-24 px-6">
+    <div class="max-w-7xl mx-auto">
+
+      <!-- Section label -->
+      <div class="flex items-center justify-between mb-14 fade-up">
+        <p class="section-label">Creative Work</p>
+        <p class="text-[10px] uppercase tracking-widest text-neutral-400 font-light">AI-crafted. Performance-tested.</p>
+      </div>
+
+      <!-- Masonry grid with brand overlay -->
+      <div class="relative">
+        <div class="masonry">
+
+          <!-- Col items — heights vary for masonry feel -->
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw1/600/780" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw2/600/520" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw3/600/680" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw4/600/440" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw5/600/560" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw6/600/720" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw7/600/500" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw8/600/640" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw9/600/460" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw10/600/700" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw11/600/540" alt="Creative work" loading="lazy">
+          </div>
+          <div class="masonry-item fade-up">
+            <img src="https://picsum.photos/seed/adw12/600/620" alt="Creative work" loading="lazy">
+          </div>
+
+        </div>
+
+        <!-- Centered brand watermark over grid -->
+        <div class="grid-brand-overlay">
+          <div class="px-8 py-5 rounded-2xl" style="background: rgba(253,252,251,0.82); backdrop-filter: blur(12px); border: 1px solid rgba(163,126,44,0.25); box-shadow: 0 8px 40px rgba(0,12,29,0.14);">
+            <p class="text-[9px] uppercase tracking-[0.5em] mb-1" style="color:#A37E2C;">AI Creative Agency</p>
+            <p class="font-serif text-xl md:text-2xl font-normal" style="color:#000C1D; letter-spacing: -0.02em;">Advertize<span style="color:#A37E2C;">.World</span></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CTA STRIP ── -->
+  <section class="py-28 px-6 text-center" style="background: linear-gradient(135deg, #000C1D 0%, #001F3F 100%);">
+    <div class="max-w-2xl mx-auto fade-up">
+      <p class="section-label mb-6" style="color:rgba(163,126,44,0.8);">Ready to scale?</p>
+      <h2 class="font-serif font-normal text-pearl leading-tight mb-8" style="font-size: clamp(2rem, 4vw, 3.2rem);">
+        Let's build creative that<br><em>actually converts.</em>
+      </h2>
+      <a href="index.html#contact" class="cta-primary" style="background: linear-gradient(135deg, #A37E2C 0%, #c9a84c 100%); color: #000C1D; box-shadow: 0 4px 24px rgba(163,126,44,0.35);">
+        Book your Discovery Call
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="bg-midnight-navy text-pearl py-12 px-6 border-t border-white/5">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <p class="text-[10px] uppercase tracking-widest text-neutral-500">© 2026 Advertize.World. All rights reserved.</p>
+      <div class="flex gap-8 text-[10px] uppercase tracking-widest text-neutral-500">
+        <a href="privacy-policy.html" class="hover:text-antique-gold transition-colors">Privacy Policy</a>
+        <a href="terms-of-service.html" class="hover:text-antique-gold transition-colors">Terms of Service</a>
+        <a href="index.html" class="hover:text-antique-gold transition-colors">Main Site</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Particle Canvas ──────────────────────────────────────────────────────
+    (function() {
+      const canvas = document.getElementById('particle-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = 1.5;
+          this.speedX = Math.random() * 0.2 - 0.1;
+          this.speedY = Math.random() * 0.2 - 0.1;
+        }
+        draw() {
+          ctx.fillStyle = '#A37E2C';
+          ctx.globalAlpha = 0.12;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x > canvas.width) this.x = 0;
+          if (this.x < 0) this.x = canvas.width;
+          if (this.y > canvas.height) this.y = 0;
+          if (this.y < 0) this.y = canvas.height;
+        }
+      }
+      const init = () => { particles = []; for (let i = 0; i < 60; i++) particles.push(new Particle()); };
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, i) => {
+          p.update(); p.draw();
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = p.x - particles[j].x, dy = p.y - particles[j].y;
+            const d = Math.sqrt(dx*dx + dy*dy);
+            if (d < 150) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(163,126,44,${0.08 - d/1800})`;
+              ctx.lineWidth = 0.3;
+              ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke(); ctx.closePath();
+            }
+          }
+        });
+        requestAnimationFrame(animate);
+      };
+      const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; init(); };
+      window.addEventListener('resize', resize);
+      resize(); animate();
+    })();
+
+    // ── Nav scroll (frosted glass + stays navy on light page) ───────────────
+    (function() {
+      const nav = document.getElementById('main-nav');
+      if (!nav) return;
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 40) nav.classList.add('nav-scrolled');
+        else nav.classList.remove('nav-scrolled');
+      });
+    })();
+
+    // ── Mobile menu toggle ───────────────────────────────────────────────────
+    (function() {
+      const toggle = document.getElementById('menu-toggle');
+      const menu   = document.getElementById('mobile-menu');
+      const icon   = document.getElementById('menu-icon');
+      const xIcon  = document.getElementById('x-icon');
+      if (!toggle || !menu) return;
+      toggle.addEventListener('click', () => {
+        menu.classList.toggle('active');
+        const open = menu.classList.contains('active');
+        icon.style.display  = open ? 'none'  : 'block';
+        xIcon.style.display = open ? 'block' : 'none';
+        document.body.style.overflow = open ? 'hidden' : 'auto';
+      });
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        menu.classList.remove('active');
+        icon.style.display  = 'block';
+        xIcon.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }));
+    })();
+
+    // ── Intersection Observer fade-up ────────────────────────────────────────
+    (function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    })();
+  </script>
+
+</body>
+</html>
