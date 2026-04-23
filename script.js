@@ -103,16 +103,29 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    const contactBtn = document.getElementById('contact-nav-btn');
     if (isDark) {
       nav.classList.add('text-pearl');
       nav.classList.remove('text-midnight-navy');
       nav.querySelectorAll('.logo-svg text[fill="#000C1D"]').forEach(t => t.setAttribute('fill', '#FDFCFB'));
       nav.querySelectorAll('.logo-svg path[stroke="#000C1D"]').forEach(p => p.setAttribute('stroke', '#FDFCFB'));
+      if (contactBtn) {
+        contactBtn.style.color       = '#FDFCFB';
+        contactBtn.style.borderColor = '#FDFCFB';
+        contactBtn.onmouseenter = () => { contactBtn.style.background = '#FDFCFB'; contactBtn.style.color = '#000C1D'; };
+        contactBtn.onmouseleave = () => { contactBtn.style.background = '';        contactBtn.style.color = '#FDFCFB'; };
+      }
     } else {
       nav.classList.add('text-midnight-navy');
       nav.classList.remove('text-pearl');
       nav.querySelectorAll('.logo-svg text[fill="#FDFCFB"]').forEach(t => t.setAttribute('fill', '#000C1D'));
       nav.querySelectorAll('.logo-svg path[stroke="#FDFCFB"]').forEach(p => p.setAttribute('stroke', '#000C1D'));
+      if (contactBtn) {
+        contactBtn.style.color       = '#000C1D';
+        contactBtn.style.borderColor = '#000C1D';
+        contactBtn.onmouseenter = () => { contactBtn.style.background = '#000C1D'; contactBtn.style.color = '#FDFCFB'; };
+        contactBtn.onmouseleave = () => { contactBtn.style.background = '';        contactBtn.style.color = '#000C1D'; };
+      }
     }
   };
 
@@ -319,38 +332,48 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     camera.updateProjectionMatrix();
   });
 
-  // Entrance animation (load)
+  // Entrance animation (load) — scale only; opacity handled by scroll logic below
+  canvas.style.opacity = '0';
   gsap.from(canvas, {
     duration: 1.4,
-    opacity: 0,
     scale: 0.85,
     ease: 'power2.out',
-    transformOrigin: 'center center'
+    transformOrigin: 'center center',
+    onStart() { canvas.style.opacity = '1'; }
   });
 
-  // Scroll exit — fade out as hero scrolls away
-  gsap.fromTo(canvas,
-    { opacity: 1 },
-    {
-      opacity: 0,
-      immediateRender: false,
-      scrollTrigger: {
-        trigger: 'header',
-        start: 'center top',
-        end: 'bottom top',
-        scrub: 1
+  // Opacity + RAF managed directly from scroll — no GSAP scrub, no lag, no state conflicts
+  const heroSection = document.querySelector('header');
+  const syncGlobe = () => {
+    if (!heroSection) return;
+    const rect   = heroSection.getBoundingClientRect();
+    const halfH  = rect.height / 2;
+    const centerY = rect.top + halfH; // positive = center below viewport top
+
+    if (rect.bottom <= 0) {
+      // Header completely above viewport — stop RAF, fully hide
+      if (globeActive.value) {
+        globeActive.value = false;
+        cancelAnimationFrame(globeRaf);
+      }
+      canvas.style.opacity = '0';
+    } else {
+      // Header at least partially visible — ensure RAF is running
+      if (!globeActive.value) {
+        globeActive.value = true;
+        cancelAnimationFrame(globeRaf);
+        globeTick();
+      }
+      // Fade: 1 while center is above viewport top → 0 when bottom reaches top
+      if (centerY >= 0) {
+        canvas.style.opacity = '1';
+      } else {
+        canvas.style.opacity = String(Math.max(0, 1 + centerY / halfH));
       }
     }
-  );
-
-  // Stop RAF when off-screen, resume when back (opacity handled by scrub above)
-  ScrollTrigger.create({
-    trigger: 'header',
-    start: 'top bottom',
-    end: 'bottom top',
-    onLeave:     () => { globeActive.value = false; cancelAnimationFrame(globeRaf); },
-    onEnterBack: () => { globeActive.value = true;  cancelAnimationFrame(globeRaf); globeTick(); }
-  });
+  };
+  window.addEventListener('scroll', syncGlobe, { passive: true });
+  syncGlobe();
 })();
 
 // ── Hero text cinematic entrance ──────────────────────────────────────────────
