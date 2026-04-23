@@ -12,15 +12,26 @@
   --amber-accent: #FFBF00;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--pearl);
   color: var(--midnight-navy);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  scroll-behavior: smooth;
+  -moz-osx-font-smoothing: grayscale;
   background-image: radial-gradient(circle at 50% 50%, rgba(163, 126, 44, 0.02) 0%, transparent 100%);
   margin: 0;
   overflow-x: hidden;
+  /* smoother text rendering */
+  text-rendering: optimizeLegibility;
+}
+
+/* Smooth all transitions globally */
+*, *::before, *::after {
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, .serif {

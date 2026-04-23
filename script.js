@@ -408,8 +408,8 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   if (typeof gsap === 'undefined') return;
   gsap.utils.toArray('[data-animate]').forEach(function(el) {
     gsap.from(el, {
-      y: 40, opacity: 0, duration: 0.85, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+      y: 22, opacity: 0, duration: 1.1, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
     });
   });
 })();
