@@ -1,463 +1,897 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio | Advertize.World</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            pearl: '#FDFCFB',
-            'dark-blue': '#000C1D',
-            'accent-blue': '#001F3F',
-            'logo-gold': '#A37E2C',
-            navy: '#000C1D',
-            'midnight-navy': '#000C1D',
-            'antique-gold': '#A37E2C',
-            'amber-accent': '#FFBF00',
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            serif: ['Playfair Display', 'serif'],
-          },
-        }
-      }
-    }
-  </script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap">
-  <style>
-    /* ── Hero animations ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .fade-up:nth-child(2) { transition-delay: 0.1s; }
-    .fade-up:nth-child(3) { transition-delay: 0.2s; }
-    .fade-up:nth-child(4) { transition-delay: 0.3s; }
-    .fade-up:nth-child(5) { transition-delay: 0.4s; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI UGC Ads | Advertize.World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:#0B1F3A;background:#fff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
 
-    /* ── CTA button ── */
-    .cta-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: linear-gradient(135deg, #000C1D 0%, #001F3F 100%);
-      color: #FDFCFB;
-      padding: 1rem 2.4rem;
-      border-radius: 9999px;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 1px solid transparent;
-      transition: all 0.35s ease;
-      box-shadow: 0 4px 24px rgba(0,12,29,0.18), 0 1px 4px rgba(163,126,44,0.12);
-    }
-    .cta-primary:hover {
-      background: linear-gradient(135deg, #001F3F 0%, #000C1D 100%);
-      box-shadow: 0 8px 32px rgba(0,12,29,0.28), 0 2px 8px rgba(163,126,44,0.22);
-      transform: translateY(-2px);
-      border-color: rgba(163,126,44,0.35);
-    }
-    .cta-primary svg {
-      transition: transform 0.3s ease;
-    }
-    .cta-primary:hover svg {
-      transform: translateX(3px);
-    }
+/* ── Tokens ── */
+:root{
+  --navy:#0B1F3A;
+  --gold:#A37E2C;
+  --white:#fff;
+  --gray-bg:#F7F7F7;
+  --muted:#666;
+  --border:#E0E0E0;
+  --max:1200px;
+}
 
-    /* ── Trust bar ── */
-    .trust-stars {
-      color: #A37E2C;
-      font-size: 1rem;
-      letter-spacing: 0.1em;
-    }
+/* ── Nav ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:#fff;border-bottom:1px solid #E8E8E8;
+  height:72px;padding:0 48px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#0B1F3A}
+.nav-logo-wordmark{font-size:17px;font-weight:700;letter-spacing:-0.03em;color:#0B1F3A}
+.nav-logo-wordmark span{color:#A37E2C}
+.nav-center{display:flex;align-items:center;gap:36px}
+.nav-center a{font-size:11px;text-transform:uppercase;letter-spacing:0.18em;color:#0B1F3A;text-decoration:none;opacity:.65;transition:opacity .2s}
+.nav-center a:hover{opacity:1}
+.nav-center a.active{opacity:1;color:#A37E2C}
+.btn-outline-gold{
+  background:transparent;border:1px solid #A37E2C;color:#0B1F3A;
+  padding:10px 22px;font-size:11px;font-family:'Inter',sans-serif;
+  text-transform:uppercase;letter-spacing:.18em;cursor:pointer;
+  transition:all .25s;white-space:nowrap;
+}
+.btn-outline-gold:hover{background:#A37E2C;color:#fff}
 
-    /* ── Masonry grid ── */
-    .masonry {
-      columns: 4;
-      column-gap: 14px;
-    }
-    @media (max-width: 1024px) { .masonry { columns: 3; } }
-    @media (max-width: 640px)  { .masonry { columns: 2; column-gap: 8px; } }
+/* ── Shared ── */
+.container{max-width:var(--max);margin:0 auto}
+section{padding:88px 48px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.45em;color:#A37E2C;margin-bottom:14px;font-weight:500}
+.section-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,4vw,52px);
+  font-weight:400;color:#0B1F3A;line-height:1.15;
+}
+.btn-navy{
+  background:#0B1F3A;color:#fff;border:none;
+  padding:15px 36px;font-size:11px;font-family:'Inter',sans-serif;
+  text-transform:uppercase;letter-spacing:.2em;cursor:pointer;
+  border-radius:2px;transition:background .25s;display:inline-block;
+  text-decoration:none;
+}
+.btn-navy:hover{background:#162d52}
+.btn-gold-solid{
+  background:#A37E2C;color:#fff;border:none;
+  padding:15px 36px;font-size:11px;font-family:'Inter',sans-serif;
+  text-transform:uppercase;letter-spacing:.2em;cursor:pointer;
+  border-radius:0;transition:background .25s;
+}
+.btn-gold-solid:hover{background:#8c6c24}
 
-    .masonry-item {
-      break-inside: avoid;
-      margin-bottom: 14px;
-      overflow: hidden;
-      border-radius: 4px;
-      position: relative;
-      cursor: pointer;
-    }
-    @media (max-width: 640px) { .masonry-item { margin-bottom: 8px; } }
+/* ── Hero ── */
+#hero{
+  padding:152px 48px 96px;
+  text-align:center;background:#fff;
+}
+#hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(46px,6.5vw,80px);
+  font-weight:400;color:#0B1F3A;line-height:1.08;
+  max-width:860px;margin:0 auto 26px;
+}
+#hero .sub{
+  font-size:17px;color:#666;max-width:580px;
+  margin:0 auto 42px;line-height:1.75;font-weight:300;
+}
+.trust-bar{margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.stars{display:flex;gap:4px}
+.trust-text{font-size:12px;color:#999;letter-spacing:.12em;text-transform:uppercase}
 
-    .masonry-item img {
-      width: 100%;
-      display: block;
-      transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      filter: brightness(0.97) saturate(0.95);
-    }
-    .masonry-item:hover img {
-      transform: scale(1.05);
-      filter: brightness(1) saturate(1.05);
-    }
-    .masonry-item::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,12,29,0.22) 0%, transparent 50%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-    }
-    .masonry-item:hover::after {
-      opacity: 1;
-    }
+/* ── Bento Grid ── */
+#bento-top{padding:0 48px 88px;background:#fff}
+.bento-wrap{max-width:var(--max);margin:0 auto}
+.bento-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:repeat(5,138px);
+  gap:10px;
+}
+.bc{border-radius:8px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
+.bc-label{
+  position:absolute;bottom:12px;left:12px;right:12px;
+  font-size:11px;letter-spacing:.04em;line-height:1.4;
+}
+.bc-label.light{color:rgba(255,255,255,.65)}
+.bc-label.dark{color:rgba(0,0,0,.38)}
+.play-icon{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(163,126,44,.88);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .25s,background .25s;cursor:pointer;
+  position:relative;z-index:2;
+}
+.bc:hover .play-icon{transform:scale(1.1);background:#A37E2C}
+.badge-inner{display:flex;flex-direction:column;align-items:center;gap:6px}
+.badge-svg{margin-bottom:4px}
+.badge-name{font-size:12px;font-weight:700;color:#fff;letter-spacing:.1em;text-transform:uppercase}
+.badge-sub{font-size:9px;color:rgba(163,126,44,.9);letter-spacing:.35em;text-transform:uppercase}
 
-    /* ── Grid brand overlay ── */
-    .grid-brand-overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      text-align: center;
-      pointer-events: none;
-    }
+/* ── Problem ── */
+#problem{background:#F7F7F7}
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.p-card{
+  background:#fff;border:1px solid #E0E0E0;
+  border-top:3px solid #A37E2C;
+  padding:32px 28px;border-radius:8px;
+}
+.p-card h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:21px;font-weight:600;color:#0B1F3A;
+  margin-bottom:14px;line-height:1.3;
+}
+.p-card p{font-size:14px;color:#555;line-height:1.75}
 
-    /* ── Section divider ── */
-    .section-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: #A37E2C;
-      font-weight: 500;
-    }
+/* ── Solution ── */
+#solution{background:#fff}
+.solution-row{display:grid;grid-template-columns:58% 42%;gap:64px;align-items:center}
+.solution-row h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(30px,3.5vw,46px);
+  font-weight:400;color:#0B1F3A;line-height:1.18;margin-bottom:22px;
+}
+.solution-row p{font-size:15px;color:#555;line-height:1.82;margin-bottom:16px}
+.img-ph{
+  background:#E8E4DC;border-radius:12px;
+  aspect-ratio:3/4;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.img-ph span{font-size:12px;color:#aaa;text-align:center;padding:20px;letter-spacing:.04em}
 
-    /* ── Scroll frosted glass ── */
-    #main-nav.nav-scrolled {
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      background-color: rgba(253,252,251,0.92) !important;
-    }
+/* ── Process ── */
+#process{background:#F7F7F7}
+.steps{max-width:860px;margin:48px auto 0}
+.step-row{
+  display:grid;grid-template-columns:88px 1fr;
+  gap:28px;padding:40px 0;
+  border-bottom:1px solid #E0E0E0;
+}
+.step-row:last-child{border-bottom:none}
+.step-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:60px;font-weight:300;color:#A37E2C;
+  line-height:.9;padding-top:4px;
+}
+.step-row h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:600;color:#0B1F3A;
+  margin-bottom:12px;
+}
+.step-row p{font-size:15px;color:#555;line-height:1.75}
 
-    /* ── Stat cards ── */
-    .stat-card {
-      border: 1px solid rgba(0,12,29,0.08);
-      border-radius: 12px;
-      padding: 2rem 2.5rem;
-      background: white;
-      box-shadow: 0 2px 16px rgba(0,12,29,0.05);
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-    }
-    .stat-card:hover {
-      box-shadow: 0 8px 32px rgba(0,12,29,0.1);
-      transform: translateY(-3px);
-    }
-  </style>
+/* ── Video Showcase ── */
+#video-showcase{background:#fff}
+.showcase-header{max-width:700px;margin-bottom:52px}
+.showcase-header .eyebrow-muted{
+  font-size:11px;text-transform:uppercase;letter-spacing:.35em;
+  color:#999;margin-bottom:10px;
+}
+.video-8{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.vc{
+  background:#0B1F3A;border-radius:12px;
+  aspect-ratio:9/16;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;border:2px solid transparent;
+  transition:border-color .25s,transform .25s;
+  position:relative;overflow:hidden;
+}
+.vc:hover{border-color:#A37E2C;transform:translateY(-3px)}
+.vc-label{
+  position:absolute;bottom:14px;left:0;right:0;
+  text-align:center;font-size:11px;
+  color:rgba(255,255,255,.45);letter-spacing:.04em;
+}
+
+/* ── Timeline ── */
+#timeline{background:#F7F7F7}
+.tl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.tl-card{
+  background:#fff;border-top:3px solid #A37E2C;
+  padding:32px 28px;border-radius:8px;
+}
+.tl-label{
+  font-size:11px;text-transform:uppercase;
+  letter-spacing:.35em;color:#A37E2C;margin-bottom:10px;
+}
+.tl-card h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:600;color:#0B1F3A;margin-bottom:20px;
+}
+.tl-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.tl-card li{font-size:14px;color:#555;line-height:1.6;padding-left:18px;position:relative}
+.tl-card li::before{content:'—';position:absolute;left:0;color:#A37E2C}
+.tl-note{text-align:center;margin-top:32px;font-size:13px;color:#aaa;font-style:italic}
+
+/* ── Who ── */
+#who{background:#fff}
+.who-row{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:48px}
+.who-card{padding:40px 32px;border-radius:8px}
+.who-yes{background:#fff;border:1px solid #E0E0E0;border-left:3px solid #A37E2C}
+.who-no{background:#F7F7F7;border:1px solid #E8E8E8}
+.who-card h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:23px;font-weight:600;margin-bottom:24px;
+}
+.who-yes h3{color:#A37E2C}
+.who-no h3{color:#aaa}
+.who-list{list-style:none;display:flex;flex-direction:column;gap:13px}
+.who-list li{font-size:14px;color:#444;line-height:1.55;display:flex;align-items:flex-start;gap:11px}
+.ico-y{color:#A37E2C;font-weight:700;flex-shrink:0;font-size:14px;margin-top:1px}
+.ico-n{color:#ccc;font-weight:700;flex-shrink:0;font-size:14px;margin-top:1px}
+
+/* ── FAQ ── */
+#faq{background:#F7F7F7}
+.faq-list{max-width:780px;margin:48px auto 0;border-radius:8px;overflow:hidden;border:1px solid #E0E0E0}
+.faq-item{background:#fff;border-bottom:1px solid #E0E0E0}
+.faq-item:last-child{border-bottom:none}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 28px;cursor:pointer;
+  font-size:15px;font-weight:500;color:#0B1F3A;
+  transition:color .2s;user-select:none;gap:16px;
+}
+.faq-q:hover{color:#A37E2C}
+.faq-plus{
+  font-size:24px;color:#A37E2C;flex-shrink:0;
+  line-height:1;transition:transform .3s;font-weight:300;
+}
+.faq-a{
+  display:none;
+  padding:0 28px 22px 28px;
+  font-size:14px;color:#555;line-height:1.82;
+  border-left:3px solid #A37E2C;margin-left:0;
+}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-plus{transform:rotate(45deg)}
+.faq-item.open .faq-q{color:#A37E2C}
+
+/* ── CTA Banner ── */
+#cta-banner{
+  background:#0B1F3A;text-align:center;
+  padding:100px 48px;
+}
+#cta-banner h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,5vw,56px);
+  font-weight:400;color:#fff;
+  max-width:680px;margin:0 auto 20px;line-height:1.18;
+}
+#cta-banner p{
+  font-size:17px;color:#ccc;
+  max-width:540px;margin:0 auto 44px;line-height:1.75;
+}
+
+/* ── Footer ── */
+footer{background:#0B1F3A;padding:64px 48px 32px;border-top:1px solid rgba(255,255,255,.07)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.ft-tagline{font-size:12px;color:#888;line-height:1.85;margin-top:14px;max-width:230px}
+.footer-col h4{
+  font-size:10px;text-transform:uppercase;
+  letter-spacing:.42em;color:#A37E2C;margin-bottom:18px;font-weight:500;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.footer-col a{font-size:13px;color:#888;text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{
+  padding-top:24px;border-top:1px solid rgba(255,255,255,.07);
+  font-size:11px;color:#444;letter-spacing:.1em;
+  text-transform:uppercase;text-align:center;
+}
+
+/* ── Modal ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.65);z-index:9999;
+  align-items:center;justify-content:center;padding:24px;
+}
+.modal-overlay.open{display:flex}
+.modal-box{
+  background:#fff;padding:52px 48px;
+  max-width:500px;width:100%;border-radius:8px;
+  position:relative;animation:modalIn .28s ease;
+}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.modal-close{
+  position:absolute;top:18px;right:22px;
+  font-size:22px;cursor:pointer;color:#bbb;
+  background:none;border:none;line-height:1;transition:color .2s;
+}
+.modal-close:hover{color:#0B1F3A}
+.modal-box h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:34px;font-weight:400;color:#0B1F3A;margin-bottom:6px;
+}
+.modal-box .modal-sub{font-size:14px;color:#999;margin-bottom:34px;line-height:1.6}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:#777;margin-bottom:7px}
+.field input,.field textarea{
+  width:100%;border:1px solid #E0E0E0;
+  padding:12px 15px;font-size:14px;
+  font-family:'Inter',sans-serif;color:#0B1F3A;
+  border-radius:4px;outline:none;
+  transition:border-color .2s;background:#fff;
+}
+.field input:focus,.field textarea:focus{border-color:#A37E2C}
+.field textarea{resize:vertical;min-height:110px}
+.form-note{display:none;font-size:13px;padding:10px 14px;border-radius:4px;margin-bottom:14px}
+.form-note.ok{background:#f0faf0;color:#2d7d2d;display:block}
+.form-note.err{background:#fef0f0;color:#c02020;display:block}
+.form-btn{
+  width:100%;padding:14px;
+  background:#0B1F3A;color:#fff;border:none;
+  font-family:'Inter',sans-serif;font-size:11px;
+  text-transform:uppercase;letter-spacing:.2em;
+  cursor:pointer;border-radius:2px;transition:background .2s;
+}
+.form-btn:hover{background:#162d52}
+.form-btn:disabled{opacity:.55;cursor:not-allowed}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-center{display:none}
+  section{padding:60px 20px}
+  #hero{padding:120px 20px 72px}
+  #bento-top{padding:0 20px 60px}
+  .bento-grid{
+    grid-template-columns:repeat(2,1fr);
+    grid-template-rows:none;
+    grid-auto-rows:130px;
+  }
+  .bento-grid .bc{
+    grid-column:auto!important;
+    grid-row:span 2!important;
+  }
+  .cards-3{grid-template-columns:1fr}
+  .solution-row{grid-template-columns:1fr;gap:36px}
+  .video-8{grid-template-columns:repeat(2,1fr);gap:10px}
+  .tl-grid{grid-template-columns:1fr}
+  .who-row{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .modal-box{padding:32px 24px}
+  .step-row{grid-template-columns:60px 1fr;gap:16px}
+  .step-num{font-size:42px}
+  #cta-banner,footer{padding-left:20px;padding-right:20px}
+}
+</style>
 </head>
-<body class="bg-pearl text-midnight-navy font-sans antialiased scroll-smooth overflow-x-hidden">
+<body>
 
-  <!-- Particle Canvas -->
-  <canvas id="particle-canvas"></canvas>
-
-  <!-- ── NAV (exact copy from index.html) ── -->
-  <nav id="main-nav" class="fixed w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center transition-colors duration-500 text-midnight-navy">
-    <a href="index.html" class="flex items-center gap-2" style="text-decoration:none;color:inherit;">
-      <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg w-12 h-12 transition-all duration-500">
-        <circle cx="200" cy="140" r="80" stroke="#E5E7EB" stroke-width="1" />
-        <ellipse cx="200" cy="140" rx="30" ry="80" stroke="#E5E7EB" stroke-width="1" />
-        <ellipse cx="200" cy="140" rx="60" ry="80" stroke="#E5E7EB" stroke-width="1" />
-        <line x1="120" y1="140" x2="280" y2="140" stroke="#E5E7EB" stroke-width="1" />
-        <path d="M135 100 Q200 110 265 100" stroke="#E5E7EB" stroke-width="1" fill="none" />
-        <path d="M135 180 Q200 170 265 180" stroke="#E5E7EB" stroke-width="1" fill="none" />
-        <path d="M150 100 Q130 180 280 220" stroke="#000C1D" stroke-width="12" stroke-linecap="round" fill="none" />
-        <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none" />
-        <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C" />
-        <path d="M260 100 L263 105 L268 106 L264 110 L265 115 L260 112 L255 115 L256 110 L252 106 L257 105 Z" fill="#000C1D" />
-        <path d="M280 115 L282 118 L285 119 L282 121 L283 124 L280 122 L277 124 L278 121 L275 119 L278 118 Z" fill="#000C1D" />
-        <text x="200" y="165" text-anchor="middle" fill="#000C1D" style="font: bold 56px sans-serif">Advertize</text>
-        <text x="200" y="205" text-anchor="middle" fill="#A37E2C" style="font: bold 24px sans-serif; letter-spacing: 8px">WORLD</text>
-      </svg>
-      <div class="text-xl tracking-tighter font-bold transition-colors duration-500">
-        <span>ADVERTIZE</span>
-        <span class="gold-metal-text">.WORLD</span>
-      </div>
-    </a>
-
-    <div class="hidden md:flex items-center space-x-10 text-[10px] uppercase tracking-[0.2em]">
-      <a href="index.html#about" class="hover:opacity-50 transition-opacity">About</a>
-      <a href="index.html#services" class="hover:opacity-50 transition-opacity">Services</a>
-      <a href="portfolio.html" class="hover:opacity-50 transition-opacity" style="color:#A37E2C;">Portfolio</a>
-      <a href="index.html#contact" class="border border-dark-blue text-dark-blue px-6 py-2 transition-all duration-500 hover:bg-dark-blue hover:text-pearl">Contact</a>
-    </div>
-
-    <button id="menu-toggle" class="md:hidden transition-colors duration-500">
-      <svg id="menu-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-      <svg id="x-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </button>
-  </nav>
-
-  <!-- Mobile Menu -->
-  <div id="mobile-menu">
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="33">
+      <circle cx="200" cy="140" r="80" stroke="#d0d0d0" stroke-width="1"/>
+      <ellipse cx="200" cy="140" rx="30" ry="80" stroke="#d0d0d0" stroke-width="1"/>
+      <ellipse cx="200" cy="140" rx="60" ry="80" stroke="#d0d0d0" stroke-width="1"/>
+      <line x1="120" y1="140" x2="280" y2="140" stroke="#d0d0d0" stroke-width="1"/>
+      <path d="M135 100 Q200 110 265 100" stroke="#d0d0d0" stroke-width="1" fill="none"/>
+      <path d="M135 180 Q200 170 265 180" stroke="#d0d0d0" stroke-width="1" fill="none"/>
+      <path d="M150 100 Q130 180 280 220" stroke="#0B1F3A" stroke-width="12" stroke-linecap="round" fill="none"/>
+      <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none"/>
+      <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C"/>
+      <path d="M260 100 L263 105 L268 106 L264 110 L265 115 L260 112 L255 115 L256 110 L252 106 L257 105 Z" fill="#0B1F3A"/>
+      <path d="M280 115 L282 118 L285 119 L282 121 L283 124 L280 122 L277 124 L278 121 L275 119 L278 118 Z" fill="#0B1F3A"/>
+    </svg>
+    <div class="nav-logo-wordmark">ADVERTIZE<span>.WORLD</span></div>
+  </a>
+  <div class="nav-center">
     <a href="index.html#about">About</a>
     <a href="index.html#services">Services</a>
-    <a href="portfolio.html">Portfolio</a>
-    <a href="index.html#contact">Contact</a>
+    <a href="portfolio.html" class="active">Portfolio</a>
   </div>
+  <button class="btn-outline-gold" onclick="openModal()">Start a Conversation</button>
+</nav>
 
-  <!-- ── HERO SECTION ── -->
-  <section class="relative pt-44 pb-20 px-6 text-center overflow-hidden">
-    <!-- subtle radial bg -->
-    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(163,126,44,0.05) 0%, transparent 70%);"></div>
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section id="hero">
+  <p class="eyebrow">AI UGC Ads</p>
+  <h1>AI-Powered Creative<br>That Converts at Scale</h1>
+  <p class="sub">We build your entire AI creative system — research, production, editing — so you get fully-ready ad assets every month without the creator bottleneck.</p>
+  <button class="btn-navy" onclick="openModal()">Start a Conversation</button>
+  <div class="trust-bar">
+    <div class="stars">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#A37E2C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#A37E2C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#A37E2C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#A37E2C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#A37E2C"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </div>
+    <p class="trust-text">Trusted by 40+ brands globally</p>
+  </div>
+</section>
 
-    <div class="relative max-w-4xl mx-auto">
-      <p class="section-label fade-up mb-7">Our Work</p>
+<!-- ═══════════════════════════ BENTO GRID ════════════════════════════ -->
+<div id="bento-top">
+  <div class="bento-wrap">
+    <div class="bento-grid">
 
-      <h1 class="fade-up font-serif font-normal leading-[1.1] mb-8" style="font-size: clamp(2.6rem, 6vw, 5rem);">
-        AI-Powered creative that<br class="hidden md:block">
-        reduces CPA by <span style="color:#A37E2C;">35%</span><br class="hidden md:block">
-        and <em>scales your meta spend</em>
-      </h1>
+      <!-- C1: Portrait tall — Fashion — col1 rows1-3 -->
+      <div class="bc" style="grid-column:1;grid-row:1/4;background:#E8E4DC;">
+        <span class="bc-label dark">AI UGC Ad — Fashion</span>
+      </div>
 
-      <p class="fade-up text-neutral-500 font-light leading-relaxed mb-12 mx-auto" style="max-width:520px; font-size:0.95rem;">
-        We craft performance-engineered AI ads that don't just look good — they convert. Every creative is built around data, tested for impact, and designed to scale.
-      </p>
+      <!-- C2: Portrait — Beauty — col2 rows1-2 -->
+      <div class="bc" style="grid-column:2;grid-row:1/3;background:#D6E4F0;">
+        <span class="bc-label dark">AI UGC Ad — Beauty</span>
+      </div>
 
-      <div class="fade-up mb-8">
-        <a href="index.html#contact" class="cta-primary">
-          Book your Discovery Call
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <!-- C3: Video portrait tall — col3 rows1-4 -->
+      <div class="bc" style="grid-column:3;grid-row:1/4;background:#1a1a2e;">
+        <div class="play-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 20,12 6,21"/></svg>
+        </div>
+        <span class="bc-label light">Sample Ad</span>
+      </div>
+
+      <!-- C4: Square — Brand Visual — col4 row1 -->
+      <div class="bc" style="grid-column:4;grid-row:1/2;background:#F0EAD6;">
+        <span class="bc-label dark">Brand Visual</span>
+      </div>
+
+      <!-- C5: Portrait — Lifestyle — col4 rows2-3 -->
+      <div class="bc" style="grid-column:4;grid-row:2/4;background:#E4D6E8;">
+        <span class="bc-label dark">AI UGC Ad — Lifestyle</span>
+      </div>
+
+      <!-- C6: Logo Badge — col2 rows3-5 -->
+      <div class="bc badge-inner" style="grid-column:2;grid-row:3/6;background:#0B1F3A;">
+        <div class="badge-svg">
+          <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="39">
+            <circle cx="200" cy="140" r="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <ellipse cx="200" cy="140" rx="30" ry="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <ellipse cx="200" cy="140" rx="60" ry="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <line x1="120" y1="140" x2="280" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <path d="M135 100 Q200 110 265 100" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+            <path d="M135 180 Q200 170 265 180" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+            <path d="M150 100 Q130 180 280 220" stroke="#fff" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none"/>
+            <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C"/>
+          </svg>
+        </div>
+        <div class="badge-name">Advertize</div>
+        <div class="badge-sub">World</div>
+      </div>
+
+      <!-- C7: Portrait — Food — col1 rows4-5 -->
+      <div class="bc" style="grid-column:1;grid-row:4/6;background:#DCE8E4;">
+        <span class="bc-label dark">AI UGC Ad — Food</span>
+      </div>
+
+      <!-- C8: Video portrait — col3 rows4-5 -->
+      <div class="bc" style="grid-column:3;grid-row:4/6;background:#111827;">
+        <div class="play-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 20,12 6,21"/></svg>
+        </div>
+        <span class="bc-label light">Sample Ad</span>
+      </div>
+
+      <!-- C9: Portrait — Skincare — col4 rows4-5 -->
+      <div class="bc" style="grid-column:4;grid-row:4/6;background:#E8DCE4;">
+        <span class="bc-label dark">AI UGC Ad — Skincare</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ PROBLEM SECTION ════════════════════════ -->
+<section id="problem">
+  <div class="container">
+    <p class="eyebrow">The Problem</p>
+    <h2 class="section-headline">Why Most Brands Hit<br>a Creative Ceiling</h2>
+    <div class="cards-3">
+      <div class="p-card">
+        <h3>Creators Ghost. Deadlines Slip. Quality Varies.</h3>
+        <p>You've hired creators. They miss deadlines or deliver off-brand content. Your launch timeline slips. Your content calendar stays empty. Growth stalls.</p>
+      </div>
+      <div class="p-card">
+        <h3>You Don't Have Time to Manage Shoots</h3>
+        <p>Between product development and operations, you can't babysit creators or manage revision rounds. You need assets delivered consistently without it becoming a second job.</p>
+      </div>
+      <div class="p-card">
+        <h3>Testing Dies Because You Can't Produce Fast Enough</h3>
+        <p>Your best campaigns stop working. You need 10 new concepts. Your pipeline delivers 2 per month. By the time you test, the market's moved on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SOLUTION SECTION ═══════════════════════ -->
+<section id="solution">
+  <div class="container">
+    <div class="solution-row">
+      <div>
+        <p class="eyebrow">The Solution</p>
+        <h2>Your Ads Are Losing and You Can't Rebuild Winners</h2>
+        <p>Your best-performing ads stop working. You make variations but nothing hits. You don't know why the original worked — so you can't rebuild it. That's not a creative problem. That's a research and systems problem.</p>
+        <p>We build your AI creative system from the ground up: researching your customers, developing your angles, producing and editing every asset, and iterating based on data. You get fully-edited video and image ads every month — built to find what converts, then scale it.</p>
+        <button class="btn-navy" onclick="openModal()" style="margin-top:8px">Start a Conversation</button>
+      </div>
+      <div class="img-ph">
+        <span>Sample AI Creative Output</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ PROCESS SECTION ════════════════════════ -->
+<section id="process">
+  <div class="container">
+    <p class="eyebrow">From Brief to Platform-Ready Assets in 2 Weeks</p>
+    <h2 class="section-headline">Our Process</h2>
+    <div class="steps">
+      <div class="step-row">
+        <div class="step-num">01</div>
+        <div>
+          <h3>Customer Research Phase</h3>
+          <p>We mine reviews, ad comments, and competitor data to extract the exact language, pain points, and desires of your best customers. Every concept starts here.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">02</div>
+        <div>
+          <h3>Creative Strategy</h3>
+          <p>We map customer personas to angles, awareness levels, and ad formats — strategic concepts built around what converts, not just what looks good.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">03</div>
+        <div>
+          <h3>AI Production System</h3>
+          <p>Video and image ads produced, edited, and delivered monthly. No creator logistics, no missed deadlines, no off-brand content. Ready straight for your ad account.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ VIDEO SHOWCASE ════════════════════════════ -->
+<section id="video-showcase">
+  <div class="container">
+    <div class="showcase-header">
+      <p class="eyebrow" style="color:#999;letter-spacing:.35em">Not Obviously AI. Not Plastic-Looking. Real Enough to Convert.</p>
+      <h2 class="section-headline">See What AI Creative<br>Actually Looks Like</h2>
+    </div>
+    <div class="video-8">
+      <div class="vc">
+        <div class="play-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <span class="vc-label">Fashion — Outfit Ad</span>
+      </div>
+      <div class="vc">
+        <div class="play-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <span class="vc-label">Finance — Spokesperson</span>
+      </div>
+      <div class="vc">
+        <div class="play-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <span class="vc-label">E-commerce — Bag Ad</span>
+      </div>
+      <div class="vc">
+        <div class="play-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <span class="vc-label">Jewellery — Ring Ad</span>
+      </div>
+      <div class="vc">
+        <div class="play-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <span class="vc-label">Fashion — Dress Ad</span>
+      </div>
+      <div class="vc">
+        <div class="play-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <span class="vc-label">Sports — Lifestyle</span>
+      </div>
+      <div class="vc">
+        <div class="play-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <span class="vc-label">Beauty — Skincare</span>
+      </div>
+      <div class="vc">
+        <div class="play-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><polygon points="6,3 20,12 6,21"/></svg></div>
+        <span class="vc-label">Food — Product Ad</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ TIMELINE ══════════════════════════════ -->
+<section id="timeline">
+  <div class="container">
+    <p class="eyebrow">Your Timeline</p>
+    <h2 class="section-headline">From 'Yes' to Live Creative</h2>
+    <div class="tl-grid">
+      <div class="tl-card">
+        <p class="tl-label">Week 1</p>
+        <h3>Onboarding &amp; Strategy</h3>
+        <ul>
+          <li>Onboarding call with our creative team</li>
+          <li>Audit of current creative and performance data</li>
+          <li>Define visual scenes, models, and creative angles</li>
+          <li>Approve strategic brief</li>
+        </ul>
+      </div>
+      <div class="tl-card">
+        <p class="tl-label">Week 2–3</p>
+        <h3>Production</h3>
+        <ul>
+          <li>AI scene creation and asset generation</li>
+          <li>First-round delivery and revision requests</li>
+          <li>Final asset delivery — fully edited and platform-ready</li>
+        </ul>
+      </div>
+      <div class="tl-card">
+        <p class="tl-label">Week 4+</p>
+        <h3>Iteration &amp; Optimization</h3>
+        <ul>
+          <li>Assets go live in your channels</li>
+          <li>Performance tracking begins</li>
+          <li>Weekly optimization and new concepts based on data</li>
+          <li>7–14 day turnaround on urgent requests</li>
+        </ul>
+      </div>
+    </div>
+    <p class="tl-note">Most clients see their first AI assets live within 2 weeks.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ WHO IT'S FOR ══════════════════════════ -->
+<section id="who">
+  <div class="container">
+    <p class="eyebrow">Fit</p>
+    <h2 class="section-headline">Who This Is For</h2>
+    <div class="who-row">
+      <div class="who-card who-yes">
+        <h3>This Is For Brands Who...</h3>
+        <ul class="who-list">
+          <li><span class="ico-y">✓</span>Run active paid ad campaigns on Meta or Google</li>
+          <li><span class="ico-y">✓</span>Have a proven product with existing sales</li>
+          <li><span class="ico-y">✓</span>Are experiencing creative fatigue or declining ROAS</li>
+          <li><span class="ico-y">✓</span>Want a done-for-you system, not just content delivery</li>
+          <li><span class="ico-y">✓</span>Are ready to invest in creative that compounds over time</li>
+        </ul>
+      </div>
+      <div class="who-card who-no">
+        <h3>This Is NOT For Brands Who...</h3>
+        <ul class="who-list">
+          <li><span class="ico-n">✕</span>Have no active advertising budget</li>
+          <li><span class="ico-n">✕</span>Don't have a proven product with existing sales history</li>
+          <li><span class="ico-n">✕</span>Are pre-launch without prior market validation</li>
+          <li><span class="ico-n">✕</span>Are looking for one-off content rather than a system</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ FAQ ════════════════════════════════════ -->
+<section id="faq">
+  <div class="container">
+    <p class="eyebrow">Curious? Let's Clear Things Up.</p>
+    <h2 class="section-headline">Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Does the AI creative look obviously fake?</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-a">No. We use the latest AI models and custom prompting to generate assets that look real enough to convert — UGC-quality content, lifestyle product shots, and spokesperson-style videos. If something looks off-brand, we revise it before delivery.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>What types of ads can you produce?</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-a">AI UGC-style video ads, lifestyle product visuals, spokesperson content, static image ads, and branded motion graphics — across fashion, beauty, food, real estate, finance, and general e-commerce.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>What do you need from us to get started?</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-a">High-quality product images, your brand assets (logo, fonts, colour palette), and access to any existing ad performance data. We handle the rest.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>How long does it take to get the first assets?</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-a">2–3 weeks from signed agreement to first delivery. Week 1 is onboarding and strategy. Weeks 2–3 are production. Urgent turnarounds available on request.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Can I request revisions?</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-a">Yes. Every project includes revision rounds to ensure brand alignment before we finalise delivery. Our goal is assets you're proud to run, not 'good enough.'</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>How do I get started?</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-a">Click "Start a Conversation" on this page and fill in your details. We'll audit your current creative, align on goals, and determine the best approach together.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ CTA BANNER ════════════════════════════ -->
+<section id="cta-banner">
+  <h2>Ready to Build a Creative System That Scales?</h2>
+  <p>Start a conversation and we'll show you exactly how AI creative can grow your brand — without sacrificing quality or consistency.</p>
+  <button class="btn-gold-solid" onclick="openModal()">Start a Conversation</button>
+</section>
+
+<!-- ══════════════════════════ FOOTER ════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" style="text-decoration:none;display:flex;align-items:center;gap:9px">
+          <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="27">
+            <circle cx="200" cy="140" r="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <ellipse cx="200" cy="140" rx="30" ry="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <ellipse cx="200" cy="140" rx="60" ry="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <line x1="120" y1="140" x2="280" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+            <path d="M135 100 Q200 110 265 100" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+            <path d="M135 180 Q200 170 265 180" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+            <path d="M150 100 Q130 180 280 220" stroke="#fff" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none"/>
+            <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C"/>
+          </svg>
+          <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.02em">ADVERTIZE<span style="color:#A37E2C">.WORLD</span></span>
         </a>
+        <p class="ft-tagline">The world's first performance-engineered advertising agency. Combining institutional rigor with frontier technology.</p>
       </div>
-
-      <!-- Trust indicator -->
-      <div class="fade-up flex items-center justify-center gap-3">
-        <span class="trust-stars">★★★★★</span>
-        <span class="text-neutral-500 text-xs tracking-widest uppercase font-light">Trusted by 100+ brands</span>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+        </ul>
       </div>
-    </div>
-  </section>
-
-  <!-- ── STATS BAR ── -->
-  <section class="py-12 px-6 border-y border-midnight-navy/8">
-    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-      <div class="stat-card text-center fade-up">
-        <p class="font-serif text-3xl md:text-4xl font-normal mb-1" style="color:#A37E2C;">35%</p>
-        <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-light">Avg CPA Reduction</p>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-of-service.html">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
       </div>
-      <div class="stat-card text-center fade-up">
-        <p class="font-serif text-3xl md:text-4xl font-normal mb-1" style="color:#A37E2C;">100+</p>
-        <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-light">Brands Served</p>
-      </div>
-      <div class="stat-card text-center fade-up">
-        <p class="font-serif text-3xl md:text-4xl font-normal mb-1" style="color:#A37E2C;">4.2×</p>
-        <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-light">Avg ROAS Lift</p>
-      </div>
-      <div class="stat-card text-center fade-up">
-        <p class="font-serif text-3xl md:text-4xl font-normal mb-1" style="color:#A37E2C;">48h</p>
-        <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-light">Avg Delivery Time</p>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/advertize.world" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="mailto:advertize.w@gmail.com">advertize.w@gmail.com</a></li>
+        </ul>
       </div>
     </div>
-  </section>
+    <div class="footer-bottom">© 2026 Advertize.World. All rights reserved.</div>
+  </div>
+</footer>
 
-  <!-- ── IMAGE GRID ── -->
-  <section class="py-24 px-6">
-    <div class="max-w-7xl mx-auto">
-
-      <!-- Section label -->
-      <div class="flex items-center justify-between mb-14 fade-up">
-        <p class="section-label">Creative Work</p>
-        <p class="text-[10px] uppercase tracking-widest text-neutral-400 font-light">AI-crafted. Performance-tested.</p>
+<!-- ═══════════════════════ CONTACT MODAL ════════════════════════════ -->
+<div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">&#x2715;</button>
+    <h2>Start a Conversation</h2>
+    <p class="modal-sub">Tell us about your brand and goals. We'll get back to you within 24 hours.</p>
+    <div class="form-note ok" id="form-ok" style="display:none">Your message was sent. We'll be in touch shortly.</div>
+    <div class="form-note err" id="form-err" style="display:none">Something went wrong. Please try again or email us directly.</div>
+    <form id="contact-form" onsubmit="submitForm(event)" novalidate>
+      <div class="field">
+        <label for="cf-name">Your Name</label>
+        <input type="text" id="cf-name" name="name" placeholder="Jane Smith" required>
       </div>
-
-      <!-- Masonry grid with brand overlay -->
-      <div class="relative">
-        <div class="masonry">
-
-          <!-- Col items — heights vary for masonry feel -->
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw1/600/780" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw2/600/520" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw3/600/680" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw4/600/440" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw5/600/560" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw6/600/720" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw7/600/500" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw8/600/640" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw9/600/460" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw10/600/700" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw11/600/540" alt="Creative work" loading="lazy">
-          </div>
-          <div class="masonry-item fade-up">
-            <img src="https://picsum.photos/seed/adw12/600/620" alt="Creative work" loading="lazy">
-          </div>
-
-        </div>
-
-        <!-- Centered brand watermark over grid -->
-        <div class="grid-brand-overlay">
-          <div class="px-8 py-5 rounded-2xl" style="background: rgba(253,252,251,0.82); backdrop-filter: blur(12px); border: 1px solid rgba(163,126,44,0.25); box-shadow: 0 8px 40px rgba(0,12,29,0.14);">
-            <p class="text-[9px] uppercase tracking-[0.5em] mb-1" style="color:#A37E2C;">AI Creative Agency</p>
-            <p class="font-serif text-xl md:text-2xl font-normal" style="color:#000C1D; letter-spacing: -0.02em;">Advertize<span style="color:#A37E2C;">.World</span></p>
-          </div>
-        </div>
+      <div class="field">
+        <label for="cf-email">Email Address</label>
+        <input type="email" id="cf-email" name="email" placeholder="jane@yourbrand.com" required>
       </div>
-
-    </div>
-  </section>
-
-  <!-- ── CTA STRIP ── -->
-  <section class="py-28 px-6 text-center" style="background: linear-gradient(135deg, #000C1D 0%, #001F3F 100%);">
-    <div class="max-w-2xl mx-auto fade-up">
-      <p class="section-label mb-6" style="color:rgba(163,126,44,0.8);">Ready to scale?</p>
-      <h2 class="font-serif font-normal text-pearl leading-tight mb-8" style="font-size: clamp(2rem, 4vw, 3.2rem);">
-        Let's build creative that<br><em>actually converts.</em>
-      </h2>
-      <a href="index.html#contact" class="cta-primary" style="background: linear-gradient(135deg, #A37E2C 0%, #c9a84c 100%); color: #000C1D; box-shadow: 0 4px 24px rgba(163,126,44,0.35);">
-        Book your Discovery Call
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-  </section>
-
-  <!-- ── FOOTER ── -->
-  <footer class="bg-midnight-navy text-pearl py-12 px-6 border-t border-white/5">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-      <p class="text-[10px] uppercase tracking-widest text-neutral-500">© 2026 Advertize.World. All rights reserved.</p>
-      <div class="flex gap-8 text-[10px] uppercase tracking-widest text-neutral-500">
-        <a href="privacy-policy.html" class="hover:text-antique-gold transition-colors">Privacy Policy</a>
-        <a href="terms-of-service.html" class="hover:text-antique-gold transition-colors">Terms of Service</a>
-        <a href="index.html" class="hover:text-antique-gold transition-colors">Main Site</a>
+      <div class="field">
+        <label for="cf-msg">Message</label>
+        <textarea id="cf-msg" name="message" placeholder="Tell us about your brand, current challenges, and what you're hoping to achieve..." required></textarea>
       </div>
-    </div>
-  </footer>
+      <button type="submit" class="form-btn" id="form-submit">Send Message</button>
+    </form>
+  </div>
+</div>
 
-  <script>
-    // ── Particle Canvas ──────────────────────────────────────────────────────
-    (function() {
-      const canvas = document.getElementById('particle-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let particles = [];
-      class Particle {
-        constructor() {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height;
-          this.size = 1.5;
-          this.speedX = Math.random() * 0.2 - 0.1;
-          this.speedY = Math.random() * 0.2 - 0.1;
-        }
-        draw() {
-          ctx.fillStyle = '#A37E2C';
-          ctx.globalAlpha = 0.12;
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        update() {
-          this.x += this.speedX;
-          this.y += this.speedY;
-          if (this.x > canvas.width) this.x = 0;
-          if (this.x < 0) this.x = canvas.width;
-          if (this.y > canvas.height) this.y = 0;
-          if (this.y < 0) this.y = canvas.height;
-        }
+<script>
+// ── Modal ──────────────────────────────────────────────────────────────
+function openModal(){
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleOverlayClick(e){
+  if(e.target===document.getElementById('modal')) closeModal();
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+// ── Form submit → Web3Forms ────────────────────────────────────────────
+async function submitForm(e){
+  e.preventDefault();
+  const btn=document.getElementById('form-submit');
+  const ok=document.getElementById('form-ok');
+  const err=document.getElementById('form-err');
+  const form=document.getElementById('contact-form');
+  ok.style.display='none'; err.style.display='none';
+  btn.disabled=true; btn.textContent='Sending…';
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        access_key:'ce748907-0f1f-4eaf-b459-5dfc864b3f85',
+        subject:'New inquiry from Advertize.World portfolio',
+        from_name:document.getElementById('cf-name').value,
+        name:document.getElementById('cf-name').value,
+        email:document.getElementById('cf-email').value,
+        message:document.getElementById('cf-msg').value,
+        botcheck:''
+      })
+    });
+    const data=await res.json();
+    if(data.success){
+      ok.style.display='block';
+      form.reset();
+      btn.textContent='Sent ✓';
+      setTimeout(()=>{ btn.disabled=false; btn.textContent='Send Message'; },3000);
+    } else {
+      throw new Error('failed');
+    }
+  } catch{
+    err.style.display='block';
+    btn.disabled=false; btn.textContent='Send Message';
+  }
+}
+
+// ── FAQ accordion ──────────────────────────────────────────────────────
+function toggleFaq(el){
+  const item=el.closest('.faq-item');
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen) item.classList.add('open');
+}
+
+// ── Smooth fade-in on scroll ───────────────────────────────────────────
+(function(){
+  const els=document.querySelectorAll(
+    '#hero h1,#hero .sub,#hero button,#hero .trust-bar,'+
+    '.p-card,.step-row,.tl-card,.who-card,.vc,'+
+    '.solution-row h2,.solution-row p,.img-ph,'+
+    '#cta-banner h2,#cta-banner p,#cta-banner button'
+  );
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.style.transition='opacity .75s ease, transform .75s ease';
+        e.target.style.opacity='1';
+        e.target.style.transform='none';
+        io.unobserve(e.target);
       }
-      const init = () => { particles = []; for (let i = 0; i < 60; i++) particles.push(new Particle()); };
-      const animate = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach((p, i) => {
-          p.update(); p.draw();
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = p.x - particles[j].x, dy = p.y - particles[j].y;
-            const d = Math.sqrt(dx*dx + dy*dy);
-            if (d < 150) {
-              ctx.beginPath();
-              ctx.strokeStyle = `rgba(163,126,44,${0.08 - d/1800})`;
-              ctx.lineWidth = 0.3;
-              ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.stroke(); ctx.closePath();
-            }
-          }
-        });
-        requestAnimationFrame(animate);
-      };
-      const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; init(); };
-      window.addEventListener('resize', resize);
-      resize(); animate();
-    })();
-
-    // ── Nav scroll (frosted glass + stays navy on light page) ───────────────
-    (function() {
-      const nav = document.getElementById('main-nav');
-      if (!nav) return;
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 40) nav.classList.add('nav-scrolled');
-        else nav.classList.remove('nav-scrolled');
-      });
-    })();
-
-    // ── Mobile menu toggle ───────────────────────────────────────────────────
-    (function() {
-      const toggle = document.getElementById('menu-toggle');
-      const menu   = document.getElementById('mobile-menu');
-      const icon   = document.getElementById('menu-icon');
-      const xIcon  = document.getElementById('x-icon');
-      if (!toggle || !menu) return;
-      toggle.addEventListener('click', () => {
-        menu.classList.toggle('active');
-        const open = menu.classList.contains('active');
-        icon.style.display  = open ? 'none'  : 'block';
-        xIcon.style.display = open ? 'block' : 'none';
-        document.body.style.overflow = open ? 'hidden' : 'auto';
-      });
-      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-        menu.classList.remove('active');
-        icon.style.display  = 'block';
-        xIcon.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      }));
-    })();
-
-    // ── Intersection Observer fade-up ────────────────────────────────────────
-    (function() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-    })();
-  </script>
-
+    });
+  },{threshold:.1});
+  els.forEach((el,i)=>{
+    el.style.opacity='0';
+    el.style.transform='translateY(18px)';
+    el.style.transitionDelay=(i%4)*0.07+'s';
+    io.observe(el);
+  });
+})();
+</script>
 </body>
 </html>
