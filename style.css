@@ -120,7 +120,7 @@ nav.text-pearl .logo-svg path[stroke="#000C1D"] { stroke: #FDFCFB; }
   background-color: var(--pearl);
   display: flex;
   flex-direction: column;
-  items-center: center;
+  align-items: center;
   justify-content: center;
   gap: 2rem;
   opacity: 0;
