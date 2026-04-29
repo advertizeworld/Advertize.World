@@ -136,9 +136,11 @@ nav.text-pearl .logo-svg path[stroke="#000C1D"] { stroke: #FDFCFB; }
 #mobile-menu a {
   font-size: 1.875rem;
   font-family: var(--font-serif);
-  font-style: italic;
+  font-style: normal;
   text-decoration: none;
   color: inherit;
+  text-align: center;
+  width: 100%;
 }
 
 /* Particle Canvas */
