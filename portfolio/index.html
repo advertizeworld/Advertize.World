@@ -30,6 +30,7 @@ nav{
   background:#fff;border-bottom:1px solid #E8E8E8;
   height:72px;padding:0 48px;
   display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
 }
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#0B1F3A}
 .nav-logo-wordmark{font-size:17px;font-weight:700;letter-spacing:-0.03em;color:#0B1F3A}
@@ -340,7 +341,7 @@ footer{background:#0B1F3A;padding:64px 48px 32px;border-top:1px solid rgba(255,2
 
 /* ── Mobile ── */
 @media(max-width:768px){
-  nav{padding:0 20px}
+  nav{padding:0 16px;height:60px;}
   .nav-center{display:none}
   section{padding:60px 20px}
   #hero{padding:120px 20px 72px}
@@ -392,7 +393,6 @@ footer{background:#0B1F3A;padding:64px 48px 32px;border-top:1px solid rgba(255,2
     <a href="/#services">Services</a>
     <a href="/portfolio/" class="active">Portfolio</a>
   </div>
-  <button class="btn-outline-gold" onclick="openModal()">Start a Conversation</button>
 </nav>
 
 <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
