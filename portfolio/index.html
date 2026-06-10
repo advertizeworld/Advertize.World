@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sifonn">
 <style>
 /* ── Reset ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -40,8 +41,9 @@ nav{
 .nav-mobile a{font-size:22px;font-family:'Cormorant Garamond',serif;color:#0B1F3A;text-decoration:none;letter-spacing:.02em}
 .nav-mobile a:hover{color:#A37E2C}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#0B1F3A}
-.nav-logo-wordmark{font-size:17px;font-weight:700;letter-spacing:-0.03em;color:#0B1F3A}
-.nav-logo-wordmark span{color:#A37E2C}
+.nav-logo-wordmark{font-family:'Sifonn',sans-serif;letter-spacing:-0.02em;color:#0B1F3A;line-height:1;}
+.nav-logo-wordmark .logo-line-1{font-size:18px;line-height:1;}
+.nav-logo-wordmark .logo-line-2{font-size:9px;letter-spacing:0.12em;line-height:1;margin-top:2px;}
 .nav-center{display:flex;align-items:center;gap:36px}
 .nav-center a{font-size:11px;text-transform:uppercase;letter-spacing:0.18em;color:#0B1F3A;text-decoration:none;opacity:.65;transition:opacity .2s}
 .nav-center a:hover{opacity:1}
@@ -382,20 +384,10 @@ footer{background:#0B1F3A;padding:64px 48px 32px;border-top:1px solid rgba(255,2
 <!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
 <nav>
   <a href="/" class="nav-logo">
-    <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="33">
-      <circle cx="200" cy="140" r="80" stroke="#d0d0d0" stroke-width="1"/>
-      <ellipse cx="200" cy="140" rx="30" ry="80" stroke="#d0d0d0" stroke-width="1"/>
-      <ellipse cx="200" cy="140" rx="60" ry="80" stroke="#d0d0d0" stroke-width="1"/>
-      <line x1="120" y1="140" x2="280" y2="140" stroke="#d0d0d0" stroke-width="1"/>
-      <path d="M135 100 Q200 110 265 100" stroke="#d0d0d0" stroke-width="1" fill="none"/>
-      <path d="M135 180 Q200 170 265 180" stroke="#d0d0d0" stroke-width="1" fill="none"/>
-      <path d="M150 100 Q130 180 280 220" stroke="#0B1F3A" stroke-width="12" stroke-linecap="round" fill="none"/>
-      <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none"/>
-      <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C"/>
-      <path d="M260 100 L263 105 L268 106 L264 110 L265 115 L260 112 L255 115 L256 110 L252 106 L257 105 Z" fill="#0B1F3A"/>
-      <path d="M280 115 L282 118 L285 119 L282 121 L283 124 L280 122 L277 124 L278 121 L275 119 L278 118 Z" fill="#0B1F3A"/>
-    </svg>
-    <div class="nav-logo-wordmark">ADVERTIZE<span>.WORLD</span></div>
+    <div class="nav-logo-wordmark">
+      <div class="logo-line-1">ADVERTIZE.</div>
+      <div class="logo-line-2">WORLD</div>
+    </div>
   </a>
   <div class="nav-center">
     <a href="/#about">About</a>
@@ -734,19 +726,9 @@ footer{background:#0B1F3A;padding:64px 48px 32px;border-top:1px solid rgba(255,2
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a href="/" style="text-decoration:none;display:flex;align-items:center;gap:9px">
-          <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="27">
-            <circle cx="200" cy="140" r="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-            <ellipse cx="200" cy="140" rx="30" ry="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-            <ellipse cx="200" cy="140" rx="60" ry="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-            <line x1="120" y1="140" x2="280" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-            <path d="M135 100 Q200 110 265 100" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
-            <path d="M135 180 Q200 170 265 180" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
-            <path d="M150 100 Q130 180 280 220" stroke="#fff" stroke-width="12" stroke-linecap="round" fill="none"/>
-            <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none"/>
-            <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C"/>
-          </svg>
-          <span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-.02em">ADVERTIZE<span style="color:#A37E2C">.WORLD</span></span>
+        <a href="/" style="text-decoration:none;display:block;line-height:1;">
+          <div style="font-family:'Sifonn',sans-serif;font-size:1.75rem;letter-spacing:-0.02em;line-height:1;color:#fff;">ADVERTIZE.</div>
+          <div style="font-family:'Sifonn',sans-serif;font-size:0.88rem;letter-spacing:0.12em;line-height:1;margin-top:3px;color:#fff;">WORLD</div>
         </a>
         <p class="ft-tagline">The world's first performance-engineered advertising agency. Combining institutional rigor with frontier technology.</p>
       </div>

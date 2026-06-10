@@ -29,31 +29,17 @@
         }
     </script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sifonn">
 </head>
 <body class="bg-pearl text-midnight-navy font-sans antialiased scroll-smooth selection:bg-dark-blue selection:text-pearl overflow-x-hidden">
     <canvas id="particle-canvas"></canvas>
 
     <!-- Navigation -->
     <nav id="main-nav" class="fixed w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center transition-colors duration-500 text-midnight-navy">
-        <a href="/" class="flex items-center gap-2 no-underline" style="text-decoration:none;color:inherit;">
-            <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg w-12 h-12 transition-all duration-500">
-                <circle cx="200" cy="140" r="80" stroke="#B8B8B8" stroke-width="1" />
-                <ellipse cx="200" cy="140" rx="30" ry="80" stroke="#B8B8B8" stroke-width="1" />
-                <ellipse cx="200" cy="140" rx="60" ry="80" stroke="#B8B8B8" stroke-width="1" />
-                <line x1="120" y1="140" x2="280" y2="140" stroke="#B8B8B8" stroke-width="1" />
-                <path d="M135 100 Q200 110 265 100" stroke="#B8B8B8" stroke-width="1" fill="none" />
-                <path d="M135 180 Q200 170 265 180" stroke="#B8B8B8" stroke-width="1" fill="none" />
-                <path d="M150 100 Q130 180 280 220" stroke="#000C1D" stroke-width="12" stroke-linecap="round" fill="none" />
-                <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none" />
-                <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C" />
-                <path d="M260 100 L263 105 L268 106 L264 110 L265 115 L260 112 L255 115 L256 110 L252 106 L257 105 Z" fill="#000C1D" />
-                <path d="M280 115 L282 118 L285 119 L282 121 L283 124 L280 122 L277 124 L278 121 L275 119 L278 118 Z" fill="#000C1D" />
-                <text x="200" y="165" text-anchor="middle" fill="#000C1D" style="font: bold 56px sans-serif">Advertize</text>
-                <text x="200" y="205" text-anchor="middle" fill="#A37E2C" style="font: bold 24px sans-serif; letter-spacing: 8px">WORLD</text>
-            </svg>
-            <div class="text-xl tracking-tighter font-bold transition-colors duration-500">
-                <span>ADVERTIZE</span>
-                <span class="gold-metal-text">.WORLD</span>
+        <a href="/" class="flex items-center no-underline" style="text-decoration:none;color:inherit;">
+            <div class="leading-none transition-colors duration-500">
+                <div style="font-family:'Sifonn',sans-serif;font-size:1.2rem;letter-spacing:-0.02em;line-height:1;">ADVERTIZE.</div>
+                <div style="font-family:'Sifonn',sans-serif;font-size:0.6rem;letter-spacing:0.12em;line-height:1;margin-top:2px;">WORLD</div>
             </div>
         </a>
         
@@ -289,21 +275,10 @@
             <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-8 relative z-10">
                 <!-- Brand Column -->
                 <div class="col-span-1 md:col-span-1">
-                    <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mb-8">
-                        <circle cx="200" cy="140" r="80" stroke="#B8B8B8" stroke-width="1" />
-                        <ellipse cx="200" cy="140" rx="30" ry="80" stroke="#B8B8B8" stroke-width="1" />
-                        <ellipse cx="200" cy="140" rx="60" ry="80" stroke="#B8B8B8" stroke-width="1" />
-                        <line x1="120" y1="140" x2="280" y2="140" stroke="#B8B8B8" stroke-width="1" />
-                        <path d="M135 100 Q200 110 265 100" stroke="#B8B8B8" stroke-width="1" fill="none" />
-                        <path d="M135 180 Q200 170 265 180" stroke="#B8B8B8" stroke-width="1" fill="none" />
-                        <path d="M150 100 Q130 180 280 220" stroke="#FDFCFB" stroke-width="12" stroke-linecap="round" fill="none" />
-                        <path d="M160 210 Q250 210 310 140" stroke="#A37E2C" stroke-width="10" stroke-linecap="round" fill="none" />
-                        <path d="M300 130 L320 120 L325 150 Z" fill="#A37E2C" />
-                        <path d="M260 100 L263 105 L268 106 L264 110 L265 115 L260 112 L255 115 L256 110 L252 106 L257 105 Z" fill="#FDFCFB" />
-                        <path d="M280 115 L282 118 L285 119 L282 121 L283 124 L280 122 L277 124 L278 121 L275 119 L278 118 Z" fill="#FDFCFB" />
-                        <text x="200" y="165" text-anchor="middle" fill="#FDFCFB" style="font: bold 56px sans-serif">Advertize</text>
-                        <text x="200" y="205" text-anchor="middle" fill="#A37E2C" style="font: bold 24px sans-serif; letter-spacing: 8px">WORLD</text>
-                    </svg>
+                    <div class="leading-none mb-8">
+                        <div style="font-family:'Sifonn',sans-serif;font-size:1.8rem;letter-spacing:-0.02em;line-height:1;color:#FDFCFB;">ADVERTIZE.</div>
+                        <div style="font-family:'Sifonn',sans-serif;font-size:0.9rem;letter-spacing:0.12em;line-height:1;margin-top:3px;color:#FDFCFB;">WORLD</div>
+                    </div>
                     <p class="text-neutral-400 text-sm leading-relaxed font-light max-w-[240px]">
                         The world's first performance-engineered advertising agency. Combining institutional rigor with frontier technology.
                     </p>
